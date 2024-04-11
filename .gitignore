@@ -1,0 +1,29 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    .gitignore                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/03/21 11:48:26 by algarrig          #+#    #+#              #
+#    Updated: 2024/03/26 19:26:40 by algarrig         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Executables
+*.out
+minishell
+db_minishell
+
+# Debug files
+.gdb_history
+
+# LSP files
+compile_flags.txt
