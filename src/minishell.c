@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/11 16:45:29 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:19:51 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../libft/ft.h"
 #include "tokenizer.h"
 #include "env_util.h"
+#include "signal_util.h"
 #include "cleaners.h"
 
 void	tf_loop(t_dlist **environ)
@@ -25,7 +26,7 @@ void	tf_loop(t_dlist **environ)
 	while (42)
 	{
 		user_input = readline("$>");
-		if (ft_strcmp(user_input, "exit") == 0)
+		if (!user_input)
 			break ;
 		ft_tokenize(&tokens, user_input);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
@@ -38,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	ft_setup_signal_handling();
 	ft_envdup(&environ, envp);
 	tf_loop(&environ);
 	ft_dlstclear(&environ, &ft_kvpr_cleaner);

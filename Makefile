@@ -6,7 +6,7 @@
 #    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/04/11 16:40:29 by algarrig         ###   ########.fr        #
+#    Updated: 2024/04/12 16:45:40 by bob              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ mainfiles = \
   cleaners/kvpr_cleaner.c \
   cleaners/token_cleaner.c \
   env_util.c \
+  signal_util.c \
   minishell.c \
   token.c \
   tokenizer.c \

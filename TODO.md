@@ -27,7 +27,7 @@
 - [ ] Implement pipes
 - [x] Handle enviroment vars
 - [ ] Handle $?
-- [ ] Handle C-C C-D C-\
+- [x] Handle C-C C-D C-\
 - [ ] Implement builtins (no opts unless stated otherwise):
   - [x] echo (with opt -n)
   - [x] cd (only rel and abs paths)
