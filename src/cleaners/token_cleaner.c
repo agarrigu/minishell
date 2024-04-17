@@ -6,7 +6,7 @@
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 21:00:03 by bob               #+#    #+#             */
-/*   Updated: 2024/04/11 17:18:19 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/04/12 20:03:26 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_token_cleaner(void *vptr)
 {
 	t_token	*token;
 
+	if (!vptr)
+		return ;
 	token = (t_token *) vptr;
-	if (token && token->value)
-		free((void *) token->value);
-	if (token)
-		free(token);
+	token->value && (free((void *) token->value), 0);
+	free(token);
 }

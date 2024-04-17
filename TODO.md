@@ -21,7 +21,7 @@
 ## Subject
 
 - [x] Display **prompt**
-- [ ] Working **history**
+- [x] Working **history**
 - [ ] Search and launch executable based on PATH, rel or abs path
 - [ ] Implement `<`, `>`, `<<`, `>>`
 - [ ] Implement pipes
