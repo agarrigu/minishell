@@ -30,7 +30,9 @@ fts		= \
   ft_isalnum \
   ft_isalpha \
   ft_isascii \
+  ft_isblank \
   ft_isdigit \
+  ft_isspace \
   ft_isprint \
   ft_itoa \
   ft_lstadd_back \

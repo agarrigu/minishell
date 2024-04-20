@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:45:02 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/11 17:04:12 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:06:24 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef struct s_dlist
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);
+int			ft_isblank(int c);
 int			ft_isdigit(int c);
+int			ft_isspace(int c);
 int			ft_isprint(int c);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
