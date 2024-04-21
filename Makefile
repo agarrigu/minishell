@@ -6,7 +6,7 @@
 #    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/04/21 17:34:24 by algarrig         ###   ########.fr        #
+#    Updated: 2024/04/21 21:09:05 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ mainfiles = \
   signal_util.c \
   token.c \
   tokenizer.c \
+  tokenizers.c \
 # mainfiles
 
 builtinfiles = \
