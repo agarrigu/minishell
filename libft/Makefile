@@ -15,6 +15,7 @@ fts		= \
   ft_atol \
   ft_bzero \
   ft_calloc \
+  ft_clear_void \
   ft_concat \
   ft_dlstadd_back \
   ft_dlstadd_cond \
@@ -32,8 +33,9 @@ fts		= \
   ft_isascii \
   ft_isblank \
   ft_isdigit \
-  ft_isspace \
+  ft_isgraph \
   ft_isprint \
+  ft_isspace \
   ft_itoa \
   ft_lstadd_back \
   ft_lstadd_front \

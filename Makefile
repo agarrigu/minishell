@@ -6,7 +6,7 @@
 #    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/04/12 16:45:40 by bob              ###   ########.fr        #
+#    Updated: 2024/04/21 17:34:24 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,11 @@ MAKE 	= make --no-print-directory
 mainfiles = \
   cleaners/kvpr_cleaner.c \
   cleaners/token_cleaner.c \
+  heredoc.c \
   env_util.c \
-  signal_util.c \
+  isses.c \
   minishell.c \
+  signal_util.c \
   token.c \
   tokenizer.c \
 # mainfiles

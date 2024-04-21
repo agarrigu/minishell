@@ -23,7 +23,7 @@
 - [x] Display **prompt**
 - [x] Working **history**
 - [ ] Search and launch executable based on PATH, rel or abs path
-- [ ] Implement `<`, `>`, `<<`, `>>`
+- [/] Implement `<`, `>`, `<<`, `>>`
 - [ ] Implement pipes
 - [x] Handle enviroment vars
 - [ ] Handle $?

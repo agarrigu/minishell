@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:45:02 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/20 20:06:24 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:41:40 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			ft_isalpha(int c);
 int			ft_isascii(int c);
 int			ft_isblank(int c);
 int			ft_isdigit(int c);
+int			ft_isgraph(int c);
 int			ft_isspace(int c);
 int			ft_isprint(int c);
 int			ft_tolower(int c);
@@ -105,6 +106,8 @@ void		ft_dlstadd_cond( t_dlist **lst, t_dlist *nu,
 void		ft_dlstclear(t_dlist **lst, void (*del)(void *));
 void		ft_dlstdelone(t_dlist *lst, void (*del)(void *));
 void		ft_removedlst(t_dlist **lst, void (*del)(void *));
+
+void		ft_clear_void(void *vptr);
 
 /* converters */
 char		*ft_itoa(int n);

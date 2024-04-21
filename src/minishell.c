@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/17 15:25:28 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:26:04 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@
 #include "tokenizer.h"
 #include "env_util.h"
 #include "cleaners.h"
+#include "heredoc.h"
 #include <stdlib.h>
+#include "token.h"
 
-void	tf_loop(t_dlist **environ)
+void	ft_parse(t_dlist *tokens)
+{
+	(void) tokens;
+}
+
+static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
 	static t_dlist	*tokens;
@@ -34,6 +41,8 @@ void	tf_loop(t_dlist **environ)
 		if (*user_input)
 			(add_history(user_input));
 		ft_tokenize(&tokens, user_input);
+		ft_do_heredoc(&tokens);
+		ft_parse(tokens);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
