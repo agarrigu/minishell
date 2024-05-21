@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 19:39:28 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 19:40:48 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:48:58 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,5 @@ void	ft_clear_void(void *vptr)
 {
 	if (vptr)
 		free(vptr);
+	vptr = NULL;
 }

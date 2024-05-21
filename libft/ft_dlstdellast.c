@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.h                                          :+:      :+:    :+:   */
+/*   ft_dlstdellast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 16:59:15 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/22 17:41:33 by bob              ###   ########.fr       */
+/*   Created: 2024/05/13 20:14:43 by algarrig          #+#    #+#             */
+/*   Updated: 2024/05/15 18:32:51 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_H
-# define HEREDOC_H
-# include "../libft/ft.h"
+#include "ft.h"
 
-int	ft_do_heredoc(t_dlist **tokens, const char *delim);
+void	ft_dlstdellast(t_dlist **lst, void (*del)(void *))
+{
+	t_dlist	*iter;	
 
-#endif /* !HEREDOC_H */
+	iter = ft_dlstlast(*lst);
+	if (iter && iter->prev)
+		iter->prev->next = NULL;
+	if (iter && iter->prev == NULL)
+		*lst = NULL;
+	if (iter)
+		ft_dlstdelone(iter, del);
+}

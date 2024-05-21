@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   tokenize_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 20:06:37 by bob               #+#    #+#             */
-/*   Updated: 2024/05/13 14:06:00 by algarrig         ###   ########.fr       */
+/*   Created: 2024/04/24 15:24:02 by bob               #+#    #+#             */
+/*   Updated: 2024/05/15 21:27:23 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
-# include "../libft/ft.h"
+#include "../../libft/ft.h"
+#include "../isses.h"
+#include "../token.h"
 
-int	ft_tokenize(t_dlist **tokens, const char *user_input);
+const char	*ft_tokenize_name(t_dlist **tokens, const char *mark)
+{
+	const char	*iter;
 
-#endif /* !TOKENIZER_H */
+	iter = mark + 1;
+	while (ft_isname(*iter))
+		++iter;
+	ft_addtkntolst(tokens, TKN_NAME, ft_substr(mark, 0, iter - mark));
+	return (iter);
+}

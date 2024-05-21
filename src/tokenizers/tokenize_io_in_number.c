@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.h                                          :+:      :+:    :+:   */
+/*   tokenize_io_in_number.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 16:59:15 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/22 17:41:33 by bob              ###   ########.fr       */
+/*   Created: 2024/05/13 19:36:29 by algarrig          #+#    #+#             */
+/*   Updated: 2024/05/15 16:38:56 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_H
-# define HEREDOC_H
-# include "../libft/ft.h"
+#include "../token.h"
+#include "../../libft/ft.h"
 
-int	ft_do_heredoc(t_dlist **tokens, const char *delim);
+const char	*ft_tokenize_in_number(t_dlist **tokens, const char *mark)
+{
+	const char	*citer;
 
-#endif /* !HEREDOC_H */
+	citer = mark;
+	while (ft_isdigit(*citer))
+		++citer;
+	ft_addtkntolst(tokens, TKN_IN_NUMBER, ft_substr(mark, 0, citer - mark));
+	return (citer);
+}

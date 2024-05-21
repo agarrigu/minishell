@@ -22,6 +22,7 @@ fts		= \
   ft_dlstadd_front \
   ft_dlstclear \
   ft_dlstdelone \
+  ft_dlstdellast \
   ft_dlstiter \
   ft_dlstlast \
   ft_dlstmap \

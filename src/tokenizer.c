@@ -6,30 +6,50 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 21:07:13 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:29:30 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/ft.h"
-#include "tokenizers.h"
+#include "mstypes.h"
+#include "token.h"
 #include "isses.h"
+#include "tokenizers.h"
 
-void	ft_tokenize(t_dlist **tokens, char *user_input)
+static int	ft_is_digs_till_oppchr(const char *mark, char c)
 {
-	char		*iter;
+	while (ft_isdigit(*mark))
+		++mark;
+	while (ft_isblank(*mark))
+		++mark;
+	return (*mark == c);
+}
 
-	iter = user_input;
-	while (*iter)
+int	ft_tokenize(t_dlist **tokens, const char *s)
+{
+	int	ms_errno;
+
+	ms_errno = MS_ERR_OK;
+	while (*s)
 	{
-		if (0 == ft_strncmp("<<", iter, 2))
-			iter = ft_tokenize_dless(tokens, iter);
-		else if (ft_isnonquoteopp(*iter))
-			iter = tf_tokenize_symbol(tokens, iter);
-		else if (ft_isquoteopp(*iter))
-			iter = tf_tokenize_quote(tokens, iter);
-		else if (ft_isprint(*iter) && !ft_isspace(*iter))
-			iter = tf_tokenize_word(tokens, iter);
+		if (*s == '\'' && !ft_strchr(s + 1, '\''))
+			s = ft_tokenize_ucquote(tokens, s);
+		else if (*s == '"' && !ft_strchr(s + 1, '"'))
+			s = ft_tokenize_ucdquote(tokens, s);
+		else if (*s == '$' && !ft_isname(s[1]))
+			s = ft_tokenize_invdollar(tokens, s);
+		else if (ft_isopp(*s))
+			s = ft_tokenize_opperator(tokens, s);
+		else if (ft_last_typtok(*tokens) == TKN_OPP_DLESS)
+			s = ft_tokenize_io_here(tokens, s, &ms_errno);
+		else if (ft_isdigit(*s) && ft_is_digs_till_oppchr(s, '>'))
+			s = ft_tokenize_in_number(tokens, s);
+		else if (ft_isdigit(*s) && ft_is_digs_till_oppchr(s, '<'))
+			s = ft_tokenize_out_number(tokens, s);
+		else if (ft_isgraph(*s))
+			s = ft_tokenize_string(tokens, s);
 		else
-			++iter;
+			++s;
 	}
+	return (ms_errno);
 }

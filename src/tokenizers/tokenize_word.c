@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   tokenize_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 20:06:37 by bob               #+#    #+#             */
-/*   Updated: 2024/05/13 14:06:00 by algarrig         ###   ########.fr       */
+/*   Created: 2024/04/22 17:57:42 by bob               #+#    #+#             */
+/*   Updated: 2024/05/13 21:40:04 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
-# include "../libft/ft.h"
+#include "../../libft/ft.h"
+#include "../isses.h"
+#include "../token.h"
 
-int	ft_tokenize(t_dlist **tokens, const char *user_input);
+char	*ft_tokenize_word(t_dlist **tokens, char *mark)
+{
+	char	*iter;
 
-#endif /* !TOKENIZER_H */
+	iter = mark;
+	while (*iter && !ft_isopp(*iter) && ft_isgraph(*iter))
+		++iter;
+	if (mark == iter)
+		return (iter);
+	ft_addtkntolst(tokens, TKN_WORD, ft_substr(mark, 0, iter - mark));
+	return (iter);
+}

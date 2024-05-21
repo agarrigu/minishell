@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:48:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 17:47:21 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:41:14 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,23 @@
 
 typedef enum e_typtok
 {
-	GREAT,
-	DGREAT,
-	LESS,
-	DLESS,
-	DOLLAR,
-	VPIPE,
-	QUOTE,
-	DQUOTE,
-	WORD,
-	HEREDOC,
-	NONE,
+	TKN_OPP_GREAT,
+	TKN_OPP_DGREAT,
+	TKN_OPP_LESS,
+	TKN_OPP_DLESS,
+	TKN_OPP_DOLLAR,
+	TKN_OPP_VLINE,
+	TKN_OPP_QUOTE,
+	TKN_OPP_DQUOTE,
+	TKN_WORD,
+	TKN_QWORD,
+	TKN_DQWORD,
+	TKN_NAME,
+	TKN_IO_HERE,
+	TKN_IO_NUMBER,
+	TKN_IN_NUMBER,
+	TKN_OUT_NUMBER,
+	TKN_NONE,
 }	t_typtok;
 
 typedef struct s_token
@@ -35,7 +41,8 @@ typedef struct s_token
 	const char	*value;
 }	t_token;
 
-t_token	*ft_new_token(t_typtok type, const char *val);
-t_token	*ft_has_token(t_dlist *tokens, t_typtok ttype);
+t_token		*ft_new_token(t_typtok type, const char *val);
+t_typtok	ft_last_typtok(t_dlist *tokens);
+void		ft_addtkntolst(t_dlist **tokens, t_typtok type, void *data);
 
 #endif /* !TOKEN_H */

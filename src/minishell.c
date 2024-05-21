@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 17:26:04 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:41:26 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 #include "tokenizer.h"
 #include "env_util.h"
 #include "cleaners.h"
-#include "heredoc.h"
+#include "mstypes.h"
 #include <stdlib.h>
-#include "token.h"
 
 void	ft_parse(t_dlist *tokens)
 {
 	(void) tokens;
+}
+
+void	handle_error(int ms_errno)
+{
+	(void) ms_errno;
 }
 
 static void	tf_loop(t_dlist **environ)
@@ -40,8 +44,8 @@ static void	tf_loop(t_dlist **environ)
 			break ;
 		if (*user_input)
 			(add_history(user_input));
-		ft_tokenize(&tokens, user_input);
-		ft_do_heredoc(&tokens);
+		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
+			handle_error(MS_ERR_HEREDOC_INVDELIM);
 		ft_parse(tokens);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);

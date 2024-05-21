@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:47:57 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 15:20:24 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:36:34 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ t_token	*ft_new_token(t_typtok type, const char *value)
 	t_token	*token;
 
 	token = malloc(sizeof(*token));
-	token->type = type;
-	token->value = value;
+	*token = (t_token){type, value};
 	return (token);
 }
 
-t_token	*ft_has_token(t_dlist *tokens, t_typtok ttype)
+t_typtok	ft_last_typtok(t_dlist *tokens)
 {
-	t_token	*token;
-
-	while (tokens)
+	if (!tokens)
 	{
-		token = (t_token *) tokens->data;
-		if (token->type == ttype)
-			return (token);
-		tokens = tokens->next;
+		return (TKN_NONE);
 	}
-	return (NULL);
+	return (((t_token *) ft_dlstlast(tokens)->data)->type);
+}
+
+void	ft_addtkntolst(t_dlist **tokens, t_typtok type, void *data)
+{
+	ft_dlstadd_back(tokens, ft_dlstnew(ft_new_token(type, data)));
 }

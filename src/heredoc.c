@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:55:31 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 20:56:11 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:26:42 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ static char	*tf_mini_gnl(t_list *lst)
 	return (line);
 }
 
-static t_token	*tf_hdloop(const char *delim)
+void	ft_do_heredoc(t_dlist **tokens, const char *delim)
 {
 	char	*user_input;
 	t_list	*heredoc_lst;
-	t_token	*token;
 
 	heredoc_lst = NULL;
 	while (42)
@@ -64,23 +63,6 @@ static t_token	*tf_hdloop(const char *delim)
 			break ;
 		ft_lstadd_back(&heredoc_lst, ft_lstnew(user_input));
 	}
-	token = ft_new_token(HEREDOC, tf_mini_gnl(heredoc_lst));
+	ft_addtkntolst(tokens, TKN_IO_HERE, tf_mini_gnl(heredoc_lst));
 	ft_lstclear(&heredoc_lst, &ft_clear_void);
-	return (token);
-}
-
-int	ft_do_heredoc(t_dlist **tokens)
-{
-	t_dlist	*iter;
-	t_token	*token;
-
-	iter = *tokens;
-	while (iter)
-	{
-		token = (t_token *) iter->data;
-		if (token->type == DLESS && token->value)
-			ft_dlstadd_back(tokens, ft_dlstnew(tf_hdloop(token->value)));
-		iter = iter->next;
-	}
-	return (0);
 }

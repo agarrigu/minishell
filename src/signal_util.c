@@ -6,7 +6,7 @@
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:23:26 by bob               #+#    #+#             */
-/*   Updated: 2024/04/17 15:25:28 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:18:22 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *   - jump to a new line
  *   - display prompt
  *   - ???
- *   - profit (continue as normal)
+ *   - profit
  *
  * NOTE(algarrig): removed errno safety cos it seems uneeded for now.
  * easily reinstated:

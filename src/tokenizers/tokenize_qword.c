@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.h                                          :+:      :+:    :+:   */
+/*   tokenize_qword.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 16:59:15 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/22 17:41:33 by bob              ###   ########.fr       */
+/*   Created: 2024/05/13 19:59:23 by algarrig          #+#    #+#             */
+/*   Updated: 2024/05/15 20:49:17 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_H
-# define HEREDOC_H
-# include "../libft/ft.h"
+#include "../../libft/ft.h"
+#include "../token.h"
 
-int	ft_do_heredoc(t_dlist **tokens, const char *delim);
+const char	*ft_tokenize_qword(t_dlist **tokens, const char *mark)
+{
+	const char	*end_mark;
 
-#endif /* !HEREDOC_H */
+	end_mark = ft_strchr(mark, '\'');
+	ft_addtkntolst(tokens, TKN_QWORD, ft_substr(mark, 0, end_mark - mark));
+	return (end_mark);
+}

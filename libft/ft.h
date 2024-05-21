@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:45:02 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/21 19:41:40 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:22:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void		ft_dlstadd_cond( t_dlist **lst, t_dlist *nu,
 void		ft_dlstclear(t_dlist **lst, void (*del)(void *));
 void		ft_dlstdelone(t_dlist *lst, void (*del)(void *));
 void		ft_removedlst(t_dlist **lst, void (*del)(void *));
+void		ft_dlstdellast(t_dlist **lst, void (*del)(void *));
 
 void		ft_clear_void(void *vptr);
 
