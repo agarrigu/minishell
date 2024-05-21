@@ -6,7 +6,7 @@
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:48:33 by bob               #+#    #+#             */
-/*   Updated: 2024/05/15 21:34:42 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:55:51 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../isses.h"
 #include "../mstypes.h"
 #include "../heredoc.h"
+#include <stdlib.h>
 
 char	*ft_tokenize_io_here(t_dlist **tokens, char *mark, int *ms_errno)
 {
@@ -33,5 +34,6 @@ char	*ft_tokenize_io_here(t_dlist **tokens, char *mark, int *ms_errno)
 	if (!delim)
 		*ms_errno = MS_ERR_HEREDOC_INVDELIM;
 	ft_do_heredoc(tokens, delim);
+	delim && (free(delim), 0);
 	return (iter);
 }

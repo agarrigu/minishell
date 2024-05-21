@@ -6,12 +6,13 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:55:31 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/13 20:26:42 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:50:24 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline/readline.h"
 #include "../libft/ft.h"
+#include "cleaners.h"
 #include <stdlib.h>
 #include "token.h"
 
@@ -63,6 +64,7 @@ void	ft_do_heredoc(t_dlist **tokens, const char *delim)
 			break ;
 		ft_lstadd_back(&heredoc_lst, ft_lstnew(user_input));
 	}
+	ft_dlstdellast(tokens, &ft_token_cleaner);
 	ft_addtkntolst(tokens, TKN_IO_HERE, tf_mini_gnl(heredoc_lst));
 	ft_lstclear(&heredoc_lst, &ft_clear_void);
 }
