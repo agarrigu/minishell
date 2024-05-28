@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:18:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/11 17:06:21 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:50:21 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	unset(t_dlist **environ, const char *key)
 	while (iter)
 	{
 		kvpr = (t_kvpr *) iter->data;
-		if (ft_strcmp(kvpr->key, key) == 0)
+		if (0 == ft_strcmp(kvpr->key, key))
 			return (ft_removedlst(&iter, &ft_kvpr_cleaner), 0);
 		iter = iter->next;
 	}

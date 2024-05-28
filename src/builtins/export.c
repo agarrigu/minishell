@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/10 16:15:04 by bob              ###   ########.fr       */
+/*   Updated: 2024/05/28 13:43:44 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../env_util.h"
 #include "../../libft/ft.h"
 
-void	tf_change_val(t_kvpr *old, t_kvpr *nu)
+static void	tf_change_val(t_kvpr *old, t_kvpr *nu)
 {
 	free((void *) old->val);
 	old->val = nu->val;
@@ -25,7 +25,7 @@ void	tf_change_val(t_kvpr *old, t_kvpr *nu)
 	nu = NULL;
 }
 
-void	tf_insertkvpr(t_dlist **environ, t_dlist *lst, t_kvpr *nukvpr)
+static void	tf_insertkvpr(t_dlist **environ, t_dlist *lst, t_kvpr *nukvpr)
 {
 	t_dlist	*nulst;
 

@@ -6,28 +6,27 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 18:22:20 by algarrig          #+#    #+#             */
-/*   Updated: 2024/03/21 18:32:02 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:47:41 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../libft/ft.h"
+#include "../env_util.h"
 #include <unistd.h>
-#include <stdio.h>
+#include <errno.h>
 
-int	cd(const char *path)
+/**
+ * NOTE(algarrig): A ver, no es lo mas elegante pero puede funcionar
+ */
+int	cd(t_dlist *environ, const char *path)
 {
+	if (!path)
+		path = ft_get_val(environ, "HOME");
+	if (!path)
+	{
+		ft_putstr_fd("cd(builtin): ", 2);
+		errno = EINVAL;
+		return (EINVAL);
+	}
 	return (chdir(path));
 }
-
-#ifdef TEST
-
-int	main(int argc, char **argv)
-{
-	int	ret;
-
-	(void) argc;
-	ret = cd(argv[1]);
-	printf("%s\n", getcwd(NULL, 0));
-	return (ret);
-}
-
-#endif /* TEST */
