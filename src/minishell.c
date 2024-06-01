@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/17 11:41:26 by bob              ###   ########.fr       */
+/*   Updated: 2024/06/01 18:00:10 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,23 @@
 #include "cleaners.h"
 #include "mstypes.h"
 #include <stdlib.h>
+#include "rules.h"
+#include "helpers.h"
 
 void	ft_parse(t_dlist *tokens)
 {
-	(void) tokens;
+	if (tokens == NULL)
+		return ;
+	if (is_command_line(&tokens))
+	{
+		//print_tokens(tokens);
+		return ;
+	}
+	else
+	{
+		printf("Syntax error\n");
+		return ;
+	}
 }
 
 void	handle_error(int ms_errno)

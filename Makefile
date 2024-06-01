@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/05/15 21:02:49 by algarrig         ###   ########.fr        #
+#    Updated: 2024/06/01 17:59:12 by srodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ mainfiles = \
   signal_util.c \
   token.c \
   tokenizer.c \
+  rules.c \
+  rules2.c
 # mainfiles
 
 cleanerfiles = \
