@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/28 15:44:50 by bob              ###   ########.fr       */
+/*   Updated: 2024/06/04 14:11:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int	ft_parse(t_dlist *tokens)
 {
 	(void) tokens;
 	return (0);
-}
-
-void	handle_error(int ms_errno)
-{
-	(void) ms_errno;
 }
 
 int	ft_do_stuff(t_dlist **environ, const char *user_input)
