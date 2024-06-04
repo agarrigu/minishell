@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/28 15:03:17 by bob              ###   ########.fr       */
+/*   Updated: 2024/05/28 15:44:50 by bob              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,15 @@
 #include "mstypes.h"
 #include <stdlib.h>
 
-int ft_exec(int *last_return_status)
+int	ft_exec(t_dlist **environ, int *last_return_status)
 {
 	(void) last_return_status;
-
 	return (0);
 }
 
 int	ft_parse(t_dlist *tokens)
 {
 	(void) tokens;
-
 	return (0);
 }
 
@@ -39,7 +37,7 @@ void	handle_error(int ms_errno)
 	(void) ms_errno;
 }
 
-int ft_do_stuff(const char* user_input)
+int	ft_do_stuff(t_dlist **environ, const char *user_input)
 {
 	static t_dlist	*tokens;
 	static int		last_return_status;
@@ -50,7 +48,7 @@ int ft_do_stuff(const char* user_input)
 	ms_errno = ft_parse(tokens);
 	if (ms_errno != MS_ERR_OK)
 		handle_error(ms_errno);
-	ms_errno = ft_exec(&last_return_status);
+	ms_errno = ft_exec(environ, &last_return_status);
 	if (ms_errno != MS_ERR_OK)
 		handle_error(ms_errno);
 	ft_dlstclear(&tokens, &ft_token_cleaner);
@@ -70,16 +68,16 @@ static int	tf_loop(t_dlist **environ)
 			break ;
 		if (*user_input)
 			(add_history(user_input));
-		last_return_status = ft_do_stuff(user_input);
+		last_return_status = ft_do_stuff(environ, user_input);
 		free(user_input);
 	}
-	return last_return_status;
+	return (last_return_status);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	static t_dlist	*environ;
-	int				status;
+	static int		status;
 
 	(void) argc;
 	(void) argv;
