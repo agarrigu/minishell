@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:52:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/01 17:59:37 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:11:40 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 bool	is_command_line(t_dlist **tokens)
 {
-	t_token	*token_data;
+	t_token	*token;
 
 	if (*tokens == NULL)
 		return (false);
@@ -54,8 +54,8 @@ bool	is_command_line(t_dlist **tokens)
 	{
 		if (*tokens == NULL)
 			return (true);
-		token_data = (*tokens)->data;
-		if (token_data->type == TKN_OPP_VLINE)
+		token = get_token(*tokens);
+		if (get_type(token) == TKN_OPP_VLINE)
 		{
 			*tokens = (*tokens)->next;
 			if (is_command_line(tokens))
@@ -99,23 +99,27 @@ bool	is_io_redir_list(t_dlist **tokens)
 
 bool	is_io_redir(t_dlist **tokens)
 {
-	t_token	*token_data;
+	t_token	*token;
 
-	token_data = (*tokens)->data;
-	if (token_data->type == TKN_OPP_LESS
-		|| token_data->type == TKN_OPP_GREAT
-		|| token_data->type == TKN_OPP_DGREAT)
+	token = get_token(*tokens);
+	if (get_type(token) == TKN_OPP_LESS || get_type(token) == TKN_OPP_GREAT
+		|| get_type(token) == TKN_OPP_DGREAT)
 	{
 		*tokens = (*tokens)->next;
 		if (*tokens == NULL)
 			return (false);
-		token_data = (*tokens)->data;
-		if (token_data->type == TKN_WORD)
+		token = get_token(*tokens);
+		if (get_type(token) == TKN_WORD)
+		{
+			set_value(get_token((*tokens)->prev), get_value(token));
+			*tokens = (*tokens)->prev;
+			delete_node((*tokens)->next);
 			*tokens = (*tokens)->next;
+		}
 		else
 			return (false);
 	}
-	else if (token_data->type == TKN_IO_HERE)
+	else if (get_type(token) == TKN_IO_HERE)
 		*tokens = (*tokens)->next;
 	else
 		return (false);
@@ -124,11 +128,12 @@ bool	is_io_redir(t_dlist **tokens)
 
 bool	is_command_name(t_dlist **tokens)
 {
-	t_token	*token_data;
+	t_token	*token;
 
-	token_data = (*tokens)->data;
-	if (token_data->type == TKN_WORD)
+	token = (*tokens)->data;
+	if (get_type(token) == TKN_WORD)
 	{
+		set_type(token, TKN_CMD);
 		*tokens = (*tokens)->next;
 		return (true);
 	}

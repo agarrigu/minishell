@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/01 18:00:10 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:03:44 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,24 @@
 #include "mstypes.h"
 #include <stdlib.h>
 #include "rules.h"
-#include "helpers.h"
+//#include "helpers.h"
 
-void	ft_parse(t_dlist *tokens)
+bool	ft_parse(t_dlist *tokens)
 {
 	if (tokens == NULL)
-		return ;
+		return (false);
 	if (is_command_line(&tokens))
-	{
-		//print_tokens(tokens);
-		return ;
-	}
+		return (true);
 	else
 	{
 		printf("Syntax error\n");
-		return ;
+		return (false);
 	}
+}
+
+void	execer(t_dlist *tokens)
+{
+	(void) tokens;
 }
 
 void	handle_error(int ms_errno)
@@ -59,7 +61,12 @@ static void	tf_loop(t_dlist **environ)
 			(add_history(user_input));
 		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
 			handle_error(MS_ERR_HEREDOC_INVDELIM);
-		ft_parse(tokens);
+		if (!ft_parse(tokens))
+		{
+			ft_dlstclear(&tokens, &ft_token_cleaner);
+			continue ;
+		}
+		execer(tokens);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}

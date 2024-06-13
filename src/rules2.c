@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules 2.c                                          :+:      :+:    :+:   */
+/*   rules2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:47:35 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/01 17:48:00 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:04:21 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rules.h"
+//#include "helpers.h"
 
 bool	is_args_list(t_dlist **tokens)
 {
@@ -28,13 +29,15 @@ bool	is_args_list(t_dlist **tokens)
 
 bool	is_arg(t_dlist **tokens)
 {
-	t_token	*token_data;
+	t_token	*token;
 
-	token_data = (*tokens)->data;
-	if (token_data->type == TKN_WORD
-		|| token_data->type == TKN_QWORD
-		|| token_data->type == TKN_DQWORD)
+	token = get_token(*tokens);
+	if (get_type(token) == TKN_WORD
+		|| get_type(token) == TKN_QWORD
+		|| get_type(token) == TKN_DQWORD)
 	{
+		if (get_type(token) == TKN_WORD)
+			set_type(token, TKN_ARG);
 		*tokens = (*tokens)->next;
 		return (true);
 	}

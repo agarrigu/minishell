@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/06/01 17:59:12 by srodrigo         ###   ########.fr        #
+#    Updated: 2024/06/11 21:02:32 by srodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ mainfiles = \
   token.c \
   tokenizer.c \
   rules.c \
-  rules2.c
+  rules2.c \
+  helpers.c
 # mainfiles
 
 cleanerfiles = \
