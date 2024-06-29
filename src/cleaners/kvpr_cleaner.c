@@ -6,7 +6,7 @@
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:21:00 by bob               #+#    #+#             */
-/*   Updated: 2024/04/12 20:03:06 by bob              ###   ########.fr       */
+/*   Updated: 2024/06/04 18:19:40 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_kvpr_cleaner(void *vptr)
 	if (!vptr)
 		return ;
 	kvpr = (t_kvpr *) vptr;
-	kvpr->key && (free((void *) kvpr->key), 0);
-	kvpr->val && (free((void *) kvpr->val), 0);
+	free((void *) kvpr->key);
+	free((void *) kvpr->val);
 	free(kvpr);
 }

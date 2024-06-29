@@ -6,30 +6,24 @@
 /*   By: bob <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:39:28 by bob               #+#    #+#             */
-/*   Updated: 2024/05/28 15:13:24 by bob              ###   ########.fr       */
+/*   Updated: 2024/06/29 18:36:48 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include "../mstypes.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "../../libft/ft.h"
 
-int	ft_builtin_exit(int argc, char **argv, int *lrs)
+int	ft_exit(char *argv[], t_dlist **environ)
 {
-	if (argc > 2)
-	{
-		ft_putstr_fd("exit(builtin): ", 2);
-		errno = E2BIG;
+	(void) environ;
+	if (argv[1] && argv[2])
 		return (E2BIG);
-	}
-	if (argc == 1)
-		return (MS_ERR_OK);
+	if (!argv[1])
+		exit (0);
 	if (!ft_stris(argv[1], &ft_isdigit))
-	{
-		ft_putstr_fd("exit(builtin): ", 2);
-		errno = EINVAL;
 		return (EINVAL);
-	}
-	*lrs = ft_atoi(argv[1]);
-	return (MS_ERR_OK);
+	printf("exit\n");
+	exit(ft_atoi(argv[1]));
 }

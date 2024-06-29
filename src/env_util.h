@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:22:27 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 13:19:47 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:42:27 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../libft/ft.h"
 # include "mstypes.h"
 
+char		**ft_kvprtov(t_dlist *environ);
 void		*ft_envdup(t_dlist **environ, char **envp);
 const char	*ft_get_val(t_dlist *lst, const char *key);
 const char	*ft_parse_val(const char *str);

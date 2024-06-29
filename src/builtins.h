@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:52:05 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/09 20:05:05 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:46:49 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define BUILTINS_H
 # include "../libft/ft.h"
 
-int	pwd(void);
-int	cd(const char *path);
-int	env(t_dlist *environ);
-int	echo(int argc, char **argv);
-int	unset(t_dlist **environ, const char *key);
-int	export(t_dlist **environ, const char *assign);
+int	ft_pwd(char *argv[], t_dlist **environ);
+int	ft_cd(char *argv[], t_dlist **environ);
+int	ft_env(char *argv[], t_dlist **environ);
+int	ft_echo(char *argv[], t_dlist **environ);
+int	ft_unset(char *argv[], t_dlist **environ);
+int	ft_export(char *argv[], t_dlist **environ);
+int	ft_exit(char *argv[], t_dlist **environ);
 
 #endif /* !BUILTINS_H */

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:53:54 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 13:24:41 by srodrigo         ###   ########.fr       */
+/*   Created: 2024/06/29 19:44:37 by srodrigo          #+#    #+#             */
+/*   Updated: 2024/06/29 19:44:47 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,33 @@ const char	*get_kvpr_key(t_kvpr *kvpr)
 const char	*get_kvpr_value(t_kvpr *kvpr)
 {
 	return (kvpr->val);
+}
+
+static int	tf_count_entries(t_dlist *lst)
+{
+	int	n;
+
+	while (lst)
+	{
+		++n;
+		lst = lst->next;
+	}
+	return (n);
+}
+
+char	**ft_kvprtov(t_dlist *environ)
+{
+	char	**envp;
+	char	**iter;
+	t_kvpr	*pair;
+
+	envp = ft_calloc(tf_count_entries(environ) + 1, sizeof(*envp));
+	iter = envp;
+	while (environ)
+	{
+		pair = (t_kvpr*) environ->data;
+		*iter++ = ft_concat(3, pair->key, "=", pair->val);
+		environ = environ->next;
+	}
+	return (envp);
 }
