@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/04 14:11:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:36:58 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,29 @@
 #include "cleaners.h"
 #include "mstypes.h"
 #include <stdlib.h>
+#include "rules.h"
 
-int	ft_exec(t_dlist **environ, int *last_return_status)
+bool	ft_parse(t_dlist *tokens)
 {
-	(void) last_return_status;
-	return (0);
+	if (tokens == NULL)
+		return (false);
+	if (is_command_line(&tokens))
+		return (true);
+	else
+	{
+		printf("Syntax error\n");
+		return (false);
+	}
 }
 
-int	ft_parse(t_dlist *tokens)
+void	execer(t_dlist *tokens)
 {
 	(void) tokens;
-	return (0);
 }
 
-int	ft_do_stuff(t_dlist **environ, const char *user_input)
+void	handle_error(int ms_errno)
 {
-	static t_dlist	*tokens;
-	static int		last_return_status;
-	static int		ms_errno;
-
-	if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
-		handle_error(MS_ERR_HEREDOC_INVDELIM);
-	ms_errno = ft_parse(tokens);
-	if (ms_errno != MS_ERR_OK)
-		handle_error(ms_errno);
-	ms_errno = ft_exec(environ, &last_return_status);
-	if (ms_errno != MS_ERR_OK)
-		handle_error(ms_errno);
-	ft_dlstclear(&tokens, &ft_token_cleaner);
-	return (last_return_status);
+	(void) ms_errno;
 }
 
 static int	tf_loop(t_dlist **environ)
@@ -63,7 +57,15 @@ static int	tf_loop(t_dlist **environ)
 			break ;
 		if (*user_input)
 			(add_history(user_input));
-		last_return_status = ft_do_stuff(environ, user_input);
+		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
+			handle_error(MS_ERR_HEREDOC_INVDELIM);
+		if (!ft_parse(tokens))
+		{
+			ft_dlstclear(&tokens, &ft_token_cleaner);
+			continue ;
+		}
+		execer(tokens);
+		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
 	return (last_return_status);

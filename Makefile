@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/05/15 21:02:49 by algarrig         ###   ########.fr        #
+#    Updated: 2024/06/29 18:53:50 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,15 @@ MAKE 	= make --no-print-directory
 
 mainfiles = \
   env_util.c \
+  env_util2.c \
   heredoc.c \
   isses.c \
   minishell.c \
   signal_util.c \
   token.c \
   tokenizer.c \
+  rules.c \
+  rules2.c \
 # mainfiles
 
 cleanerfiles = \
@@ -37,17 +40,11 @@ cleanerfiles = \
 # cleanerfiles
 
 tokenizerfiles = \
-  tokenize_dqword.c \
-  tokenize_invdollar.c \
+  tokenize_dollar.c \
+  tokenize_dquote.c \
   tokenize_io_here.c \
-  tokenize_io_in_number.c \
-  tokenize_io_out_number.c \
-  tokenize_name.c \
   tokenize_opperator.c \
-  tokenize_qword.c \
-  tokenize_string.c \
-  tokenize_ucdquote.c \
-  tokenize_ucquote.c \
+  tokenize_quote.c \
   tokenize_word.c \
 # tokenizers
 
@@ -58,6 +55,7 @@ builtinfiles = \
   unset.c \
   export.c \
   pwd.c \
+  exit.c \
 # builtinfiles
 
 SRCDIR	= src

@@ -6,30 +6,43 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:18:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/11 17:06:21 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:19:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/ft.h"
 #include "../mstypes.h"
 #include "../cleaners.h"
+#include <errno.h>
+#include <stdlib.h>
 
 /**
  * According to POSIX, unset should not return error if the variable to unset
  * does not exist.
  **/
-int	unset(t_dlist **environ, const char *key)
+int	ft_unset(char *argv[], t_dlist **environ)
 {
-	t_dlist	*iter;
+	t_dlist	*liter;
+	char	**viter;
 	t_kvpr	*kvpr;
 
-	iter = *environ;
-	while (iter)
+	viter = argv + 1;
+	if (!viter[1])
+		exit (EINVAL);
+	while (*viter)
 	{
-		kvpr = (t_kvpr *) iter->data;
-		if (ft_strcmp(kvpr->key, key) == 0)
-			return (ft_removedlst(&iter, &ft_kvpr_cleaner), 0);
-		iter = iter->next;
+		liter = *environ;
+		while (liter)
+		{
+			kvpr = (t_kvpr *) liter->data;
+			if (0 == ft_strcmp(kvpr->key, *viter))
+			{
+				ft_removedlst(&liter, &ft_kvpr_cleaner);
+				break ;
+			}
+			liter = liter->next;
+		}
+		++viter;
 	}
-	return (0);
+	exit(0);
 }
