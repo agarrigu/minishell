@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 13:05:08 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:33:50 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 #include <unistd.h>
 #include "token.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-void	init_command(t_command *command, t_dlist *tokens)
+void	init_command(t_command *command, t_dlist *tokens, t_dlist *environ)
 {
 	command->tokens = tokens;
 	command->position = 0;
-	command->inpipe_read = 0;
+	command->inpipe = 0;
 	command->outpipe[WRITE_END] = 0;
+	command->environ = environ;
 }
 
 int	get_num_commands(t_dlist *tokens)
@@ -45,11 +47,8 @@ pid_t	execute_command(t_command *command, t_dlist *environ)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (command->inpipe_read)
-		{
-			dup2(command->inpipe_read, STDIN_FILENO);
-			close(command->inpipe_read);
-		}
+		if (command->inpipe)
+			(dup2(command->inpipe, STDIN_FILENO), close(command->inpipe));
 		if (command->outpipe[WRITE_END])
 		{
 			dup2(command->outpipe[WRITE_END], STDOUT_FILENO);
@@ -57,11 +56,13 @@ pid_t	execute_command(t_command *command, t_dlist *environ)
 			close(command->outpipe[WRITE_END]);
 		}
 		command->argv = get_arguments(command->tokens);
+		if (is_builtin(command->argv[0]))
+			exit(0);
 		command->filepath = ft_strdup(command->argv[0]);
 		if (command->filepath[0] != '/' && command->filepath[0] != '.')
 			command->filepath = find_command_path(environ, command->filepath);
 		execve (command->filepath, command->argv, NULL);
-		exit (0);
+		exit (0); // Hanle Error!!!!!!!
 	}
 	return (pid);
 }

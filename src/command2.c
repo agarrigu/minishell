@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 13:24:14 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:34:25 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "env_util.h"
+#include "helpers.h"
 
 char	*find_command_path(t_dlist *environ, char *cmd)
 {
@@ -42,6 +43,7 @@ char	*find_command_path(t_dlist *environ, char *cmd)
 	if (path == NULL)
 	{
 		printf("Error: command not found: %s\n", cmd);
+		exit(1); // error!!!!
 	}
 	return (path);
 }

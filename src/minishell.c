@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 12:47:53 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:57:28 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ bool	ft_parse(t_dlist *tokens)
 
 void	execer(t_dlist *tokens, t_dlist *environ)
 {
-	pid_t				*childs_pid;
-	int					commands;
-	static t_command	command;
+	pid_t		*childs_pid;
+	int			commands;
+	t_command	command;
 
-	init_command(&command, tokens);
+	init_command(&command, tokens, environ);
 	commands = get_num_commands(tokens);
+	if (commands == 1 && parent_builtin(command))
+		return ;
 	childs_pid = malloc(sizeof(childs_pid) * commands);
 	while (command.position < commands)
 	{
@@ -54,8 +56,8 @@ void	execer(t_dlist *tokens, t_dlist *environ)
 		childs_pid[command.position] = execute_command(&command, environ);
 		close_if_fd(command.outpipe[WRITE_END]);
 		command.outpipe[WRITE_END] = 0;
-		close_if_fd(command.inpipe_read);
-		command.inpipe_read = command.outpipe[READ_END];
+		close_if_fd(command.inpipe);
+		command.inpipe = command.outpipe[READ_END];
 		command.position++;
 		command.tokens = get_next_command(command.tokens);
 	}

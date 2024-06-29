@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/06/29 13:21:13 by srodrigo         ###   ########.fr        #
+#    Updated: 2024/06/29 19:36:26 by srodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ mainfiles = \
   rules2.c \
   command.c \
   command2.c \
+  command3.c \
 #  helpers.c
 # mainfiles
 
