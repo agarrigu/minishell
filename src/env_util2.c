@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mstypes.h                                          :+:      :+:    :+:   */
+/*   env_util2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 12:57:34 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 12:30:47 by srodrigo         ###   ########.fr       */
+/*   Created: 2024/03/26 16:53:54 by algarrig          #+#    #+#             */
+/*   Updated: 2024/06/29 13:24:41 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSTYPES_H
-# define MSTYPES_H
-# define MS_ERR_OK 0
-# define MS_ERR_HEREDOC_INVDELIM 1
-# define WRITE_END 1
-# define READ_END 0
+#include <stdlib.h>
+#include "../libft/ft.h"
+#include "mstypes.h"
 
-typedef struct s_keyval
+t_kvpr	*get_kvpr(t_dlist *environ)
 {
-	const char	*key;
-	const char	*val;
-}	t_kvpr;
+	return ((t_kvpr *) environ->data);
+}
 
-#endif /* !MSTYPES_H */
+const char	*get_kvpr_key(t_kvpr *kvpr)
+{
+	return (kvpr->key);
+}
+
+const char	*get_kvpr_value(t_kvpr *kvpr)
+{
+	return (kvpr->val);
+}

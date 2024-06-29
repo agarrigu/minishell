@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/13 18:03:44 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 12:47:53 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@
 #include "mstypes.h"
 #include <stdlib.h>
 #include "rules.h"
-//#include "helpers.h"
+#include "helpers.h"
+#include <sys/wait.h>
+#include <unistd.h>
+#include "command.h"
 
 bool	ft_parse(t_dlist *tokens)
 {
@@ -35,9 +38,31 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
-void	execer(t_dlist *tokens)
+void	execer(t_dlist *tokens, t_dlist *environ)
 {
-	(void) tokens;
+	pid_t				*childs_pid;
+	int					commands;
+	static t_command	command;
+
+	init_command(&command, tokens);
+	commands = get_num_commands(tokens);
+	childs_pid = malloc(sizeof(childs_pid) * commands);
+	while (command.position < commands)
+	{
+		if (commands - command.position -1)
+			pipe(command.outpipe);
+		childs_pid[command.position] = execute_command(&command, environ);
+		close_if_fd(command.outpipe[WRITE_END]);
+		command.outpipe[WRITE_END] = 0;
+		close_if_fd(command.inpipe_read);
+		command.inpipe_read = command.outpipe[READ_END];
+		command.position++;
+		command.tokens = get_next_command(command.tokens);
+	}
+	command.position = -1;
+	while (++command.position < commands)
+		waitpid(childs_pid[command.position], NULL, 0);
+	free(childs_pid);
 }
 
 void	handle_error(int ms_errno)
@@ -66,7 +91,7 @@ static void	tf_loop(t_dlist **environ)
 			ft_dlstclear(&tokens, &ft_token_cleaner);
 			continue ;
 		}
-		execer(tokens);
+		execer(tokens, *environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
