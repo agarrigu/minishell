@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 19:36:58 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:49:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "tokenizer.h"
 #include "env_util.h"
 #include "cleaners.h"
-#include "mstypes.h"
+#include "ms_error.h"
 #include <stdlib.h>
 #include "rules.h"
 
@@ -48,6 +48,7 @@ static int	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
 	static int		last_return_status;
+	static t_dlist	*tokens;
 
 	rl_catch_signals = 0;
 	while (42)
