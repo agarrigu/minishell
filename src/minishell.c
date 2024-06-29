@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 21:07:39 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 22:16:26 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "mstypes.h"
 #include <stdlib.h>
 #include "rules.h"
-#include "helpers.h"
 #include <sys/wait.h>
 #include <unistd.h>
 #include "command.h"

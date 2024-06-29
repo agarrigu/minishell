@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_dquote.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:25:38 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/26 19:14:14 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 22:14:33 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ const char	*ft_tokenize_dquote(t_dlist **tokens, const char *mark)
 	if (iter)
 	{
 		++mark;
-		ft_addtkntolst(tokens, TKN_QWORD, ft_substr(mark, 0, iter - mark));
+		ft_addtkntolst(tokens, TKN_DQWORD, ft_substr(mark, 0, iter - mark));
 		++iter;
 	}
 	else

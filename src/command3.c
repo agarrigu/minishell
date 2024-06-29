@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 21:06:21 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:52:38 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "env_util.h"
-#include "helpers.h"
 #include "builtins.h"
 
 bool	execute_builtin(t_command command)
