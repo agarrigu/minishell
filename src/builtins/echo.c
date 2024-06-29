@@ -6,34 +6,46 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/04/08 11:00:01 by bob              ###   ########.fr       */
+/*   Updated: 2024/06/29 18:17:10 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "../../libft/ft.h"
 
-int	echo(int argc, char *const argv[])
+static int	tf_isvalidflag(const char *s)
 {
-	int		i;
-	bool	print_newline;
+	while (*s && *s == 'n')
+		++s;
+	return (*s == '\0');
+}
 
-	i = 1;
+int	ft_echo(char *argv[], t_dlist **environ)
+{
+	bool	print_newline;
+	char	**iter;
+
+	(void) environ;
 	print_newline = true;
-	if (argc > 1 && ft_strncmp(argv[1], "-n", 2) == 0)
+	iter = argv;
+	while (0 == ft_strncmp(*iter, "-n", 2))
 	{
-		++i;
-		print_newline = false;
+		if (tf_isvalidflag(&*iter[2]))
+		{
+			print_newline = false;
+			++iter;
+		}
 	}
-	while (i < argc)
+	while (*iter)
 	{
-		printf("%s", argv[i]);
-		if (i != argc - 1)
+		printf("%s", *iter);
+		if (!iter[1])
 			printf(" ");
-		++i;
+		++iter;
 	}
 	if (print_newline)
 		printf("\n");
-	return (0);
+	exit(0);
 }
