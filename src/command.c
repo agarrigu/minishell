@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 20:49:45 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:09:30 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	get_num_commands(t_dlist *tokens)
 	return (ncmd + 1);
 }
 
-pid_t	execute_command(t_command *command, t_dlist *environ)
+pid_t	execute_command(t_command *command, t_dlist *environ, int *status)
 {
 	pid_t	pid;
 
@@ -63,6 +63,7 @@ pid_t	execute_command(t_command *command, t_dlist *environ)
 		execve (command->filepath, command->argv, NULL);
 		exit (0); // Hanle Error!!!!!!!
 	}
+	wait(status);
 	return (pid);
 }
 

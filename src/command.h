@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 20:35:10 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:11:30 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_command
 
 void	init_command(t_command *command, t_dlist *tokens, t_dlist **environ);
 int		get_num_commands(t_dlist *tokens);
-pid_t	execute_command(t_command *command, t_dlist *environ);
+pid_t	execute_command(t_command *command, t_dlist *environ, int *status);
 char	**get_arguments(t_dlist *tokens);
 int		get_num_arguments(t_dlist *tokens);
 char	*find_command_path(t_dlist *environ, char *cmd);

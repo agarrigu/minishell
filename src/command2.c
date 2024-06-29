@@ -6,18 +6,16 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 19:34:25 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:44:39 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "mstypes.h"
 #include <unistd.h>
 #include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "env_util.h"
-#include "helpers.h"
 
 char	*find_command_path(t_dlist *environ, char *cmd)
 {
@@ -42,7 +40,7 @@ char	*find_command_path(t_dlist *environ, char *cmd)
 	(free(aux), ft_freesplit(paths));
 	if (path == NULL)
 	{
-		printf("Error: command not found: %s\n", cmd);
+		printf("%s: command not found\n", cmd);
 		exit(1); // error!!!!
 	}
 	return (path);

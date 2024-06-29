@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:17:10 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:28:15 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_echo(char *argv[], t_dlist **environ)
 
 	(void) environ;
 	print_newline = true;
-	iter = argv;
+	iter = argv + 1;
 	while (0 == ft_strncmp(*iter, "-n", 2))
 	{
 		if (tf_isvalidflag(&*iter[2]))

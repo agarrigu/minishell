@@ -6,12 +6,16 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 21:26:43 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:10:50 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include <readline/history.h>
+#include <readline/readline.h>
 #include "../libft/ft.h"
 #include "signal_util.h"
 #include "tokenizer.h"
@@ -19,51 +23,46 @@
 #include "cleaners.h"
 #include "ms_error.h"
 #include "builtins.h"
-#include <sys/wait.h>
 #include "command.h"
-#include <stdlib.h>
-#include <unistd.h>
 #include "rules.h"
 
-bool	ft_parse(t_dlist *tokens)
+int	ft_parse(t_dlist *tokens)
 {
 	if (tokens == NULL)
-		return (false);
+		return (MS_ERR_OK);
 	if (is_command_line(&tokens))
-		return (true);
-	else
-	{
-		printf("Syntax error\n");
-		return (false);
-	}
+		return (MS_ERR_OK);
+	ft_putstr_fd("minishell: Syntax error\n", 2);
+	errno = MS_ERR_GENERIC;
+	return (MS_ERR_GENERIC);
 }
 
-void	execer(t_dlist *tokens, t_dlist **environ)
+void	execer(t_dlist *tokens, t_dlist **environ, int *status)
 {
 	pid_t		*childs_pid;
-	int			commands;
-	t_command	command;
+	int			cmds;
+	t_command	cmd;
 
-	init_command(&command, tokens, environ);
-	commands = get_num_commands(tokens);
-	if (commands == 1 && is_exit_builtin(&command))
-		ft_exit(command.argv, command.environ); // Handle error if exit fails
-	childs_pid = malloc(sizeof(childs_pid) * commands);
-	while (command.position < commands)
+	init_command(&cmd, tokens, environ);
+	cmds = get_num_commands(tokens);
+	if (cmds == 1 && is_exit_builtin(&cmd) && !ft_exit(cmd.argv, cmd.environ))
+		return ;
+	childs_pid = malloc(sizeof(childs_pid) * cmds);
+	while (cmd.position < cmds)
 	{
-		if (commands - command.position -1)
-			pipe(command.outpipe);
-		childs_pid[command.position] = execute_command(&command, *environ);
-		close_if_fd(command.outpipe[WRITE_END]);
-		command.outpipe[WRITE_END] = 0;
-		close_if_fd(command.inpipe);
-		command.inpipe = command.outpipe[READ_END];
-		command.position++;
-		command.tokens = get_next_command(command.tokens);
+		if (cmds - cmd.position -1)
+			pipe(cmd.outpipe);
+		childs_pid[cmd.position] = execute_command(&cmd, *environ, status);
+		close_if_fd(cmd.outpipe[WRITE_END]);
+		cmd.outpipe[WRITE_END] = 0;
+		close_if_fd(cmd.inpipe);
+		cmd.inpipe = cmd.outpipe[READ_END];
+		cmd.position++;
+		cmd.tokens = get_next_command(cmd.tokens);
 	}
-	command.position = -1;
-	while (++command.position < commands)
-		waitpid(childs_pid[command.position], NULL, 0);
+	cmd.position = -1;
+	while (++cmd.position < cmds)
+		waitpid(childs_pid[cmd.position], NULL, 0);
 	free(childs_pid);
 }
 
@@ -76,6 +75,7 @@ static int	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
 	static int		last_return_status;
+	static int		ms_errno;
 	static t_dlist	*tokens;
 
 	rl_catch_signals = 0;
@@ -88,12 +88,10 @@ static int	tf_loop(t_dlist **environ)
 			(add_history(user_input));
 		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
 			handle_error(MS_ERR_HEREDOC_INVDELIM);
-		if (!ft_parse(tokens))
-		{
-			ft_dlstclear(&tokens, &ft_token_cleaner);
-			continue ;
-		}
-		execer(tokens, environ);
+		if (ft_parse(tokens) == MS_ERR_OK)
+			execer(tokens, environ, &last_return_status);
+		if (errno > 4200)
+			handle_error(errno);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
