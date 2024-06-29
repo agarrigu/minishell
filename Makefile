@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/06/29 18:53:50 by algarrig         ###   ########.fr        #
+#    Updated: 2024/06/29 19:46:22 by srodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,14 +24,20 @@ MAKE 	= make --no-print-directory
 mainfiles = \
   env_util.c \
   env_util2.c \
+  env_util2.c \
   heredoc.c \
   isses.c \
   minishell.c \
   signal_util.c \
   token.c \
+  token2.c \
   tokenizer.c \
   rules.c \
   rules2.c \
+  command.c \
+  command2.c \
+  command3.c \
+#  helpers.c
 # mainfiles
 
 cleanerfiles = \

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 19:49:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:26:43 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 #include "env_util.h"
 #include "cleaners.h"
 #include "ms_error.h"
+#include "builtins.h"
+#include <sys/wait.h>
+#include "command.h"
 #include <stdlib.h>
+#include <unistd.h>
 #include "rules.h"
 
 bool	ft_parse(t_dlist *tokens)
@@ -34,9 +38,33 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
-void	execer(t_dlist *tokens)
+void	execer(t_dlist *tokens, t_dlist **environ)
 {
-	(void) tokens;
+	pid_t		*childs_pid;
+	int			commands;
+	t_command	command;
+
+	init_command(&command, tokens, environ);
+	commands = get_num_commands(tokens);
+	if (commands == 1 && is_exit_builtin(&command))
+		ft_exit(command.argv, command.environ); // Handle error if exit fails
+	childs_pid = malloc(sizeof(childs_pid) * commands);
+	while (command.position < commands)
+	{
+		if (commands - command.position -1)
+			pipe(command.outpipe);
+		childs_pid[command.position] = execute_command(&command, *environ);
+		close_if_fd(command.outpipe[WRITE_END]);
+		command.outpipe[WRITE_END] = 0;
+		close_if_fd(command.inpipe);
+		command.inpipe = command.outpipe[READ_END];
+		command.position++;
+		command.tokens = get_next_command(command.tokens);
+	}
+	command.position = -1;
+	while (++command.position < commands)
+		waitpid(childs_pid[command.position], NULL, 0);
+	free(childs_pid);
 }
 
 void	handle_error(int ms_errno)
@@ -65,7 +93,7 @@ static int	tf_loop(t_dlist **environ)
 			ft_dlstclear(&tokens, &ft_token_cleaner);
 			continue ;
 		}
-		execer(tokens);
+		execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}

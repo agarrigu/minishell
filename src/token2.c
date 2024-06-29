@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   token 2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:47:57 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 16:29:17 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 12:39:07 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,27 @@
 #include "../libft/ft.h"
 #include "cleaners.h"
 
-t_token	*ft_new_token(t_typtok type, const char *value)
+t_token	*get_token(t_dlist *tokens)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(*token));
-	*token = (t_token){type, value};
-	return (token);
+	return ((t_token *) tokens->data);
 }
 
-t_typtok	ft_last_typtok(t_dlist *tokens)
+t_typtok	get_type(t_token *token)
 {
-	if (!tokens)
-	{
-		return (TKN_NONE);
-	}
-	return (((t_token *) ft_dlstlast(tokens)->data)->type);
+	return (token->type);
 }
 
-void	ft_addtkntolst(t_dlist **tokens, t_typtok type, void *data)
+void	set_type(t_token *token, t_typtok type)
 {
-	ft_dlstadd_back(tokens, ft_dlstnew(ft_new_token(type, data)));
+	token->type = type;
 }
 
-void	delete_node(t_dlist *tokens)
+const char	*get_value(t_token *token)
 {
-	if (tokens->prev)
-		(tokens->prev)->next = tokens->next;
-	if (tokens->next)
-		(tokens->next)->prev = tokens->prev;
-	ft_token_cleaner(get_token(tokens));
-	free(tokens);
+	return (token->value);
+}
+
+void	set_value(t_token *token, const char *value)
+{
+	token->value = ft_strdup(value);
 }

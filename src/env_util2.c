@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   env_util2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/29 18:28:46 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:51:37 by algarrig         ###   ########.fr       */
+/*   Created: 2024/06/29 19:44:37 by srodrigo          #+#    #+#             */
+/*   Updated: 2024/06/29 21:11:37 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../libft/ft.h"
 #include "mstypes.h"
+
+t_kvpr	*get_kvpr(t_dlist *environ)
+{
+	return ((t_kvpr *) environ->data);
+}
+
+const char	*get_kvpr_key(t_kvpr *kvpr)
+{
+	return (kvpr->key);
+}
+
+const char	*get_kvpr_value(t_kvpr *kvpr)
+{
+	return (kvpr->val);
+}
 
 static int	tf_count_entries(t_dlist *lst)
 {
@@ -35,7 +51,7 @@ char	**ft_kvprtov(t_dlist *environ)
 	iter = envp;
 	while (environ)
 	{
-		pair = (t_kvpr*) environ->data;
+		pair = (t_kvpr *) environ->data;
 		*iter++ = ft_concat(3, pair->key, "=", pair->val);
 		environ = environ->next;
 	}
