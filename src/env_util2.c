@@ -6,11 +6,10 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:28:46 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:33:13 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:51:37 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../libft/ft.h"
 #include "mstypes.h"
 
@@ -26,15 +25,19 @@ static int	tf_count_entries(t_dlist *lst)
 	return (n);
 }
 
-void	ft_kvprtov(t_dlist *environ)
+char	**ft_kvprtov(t_dlist *environ)
 {
-	int		n;
 	char	**envp;
+	char	**iter;
+	t_kvpr	*pair;
 
-	
-	envp = ft_calloc(sizeof(), tf_count_entries(environ) + 1)
+	envp = ft_calloc(tf_count_entries(environ) + 1, sizeof(*envp));
+	iter = envp;
 	while (environ)
 	{
+		pair = (t_kvpr*) environ->data;
+		*iter++ = ft_concat(3, pair->key, "=", pair->val);
+		environ = environ->next;
 	}
 	return (envp);
 }
