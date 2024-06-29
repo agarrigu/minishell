@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 19:33:40 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:06:21 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@
 #include <stdio.h>
 #include "env_util.h"
 #include "helpers.h"
+#include "builtins.h"
 
-bool	is_builtin(char *cmd)
+bool	execute_builtin(t_command command)
 {
-	printf("Is %s a builtin? ", cmd);
-	if (ft_strcmp(cmd, "echo") == 0) // check if in path
-		return (true);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (true);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (true);
+	if (ft_strcmp(command.argv[0], "echo") == 0)
+		ft_echo(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "cd") == 0)
+		ft_cd(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "pwd") == 0)
+		ft_pwd(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "export") == 0)
+		ft_export(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "unset") == 0)
+		ft_unset(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "env") == 0)
+		ft_env(command.argv, command.environ);
+	else if (ft_strcmp(command.argv[0], "exit") == 0)
+		ft_exit(command.argv, command.environ);
 	else
 		return (false);
 	return (true);
@@ -48,11 +48,11 @@ char	*get_command(t_dlist *tokens)
 	return (ft_strdup(get_value(get_token(tokens))));
 }
 
-bool	parent_builtin(t_command command)
+bool	is_exit_builtin(t_command *command)
 {
-	if (is_builtin(get_command(command.tokens)))
+	if (ft_strcmp(get_command(command->tokens), "exit") == 0)
 	{
-		command.argv = get_arguments(command.tokens);
+		command->argv = get_arguments(command->tokens);
 		return (true);
 	}
 	else

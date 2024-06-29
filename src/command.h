@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 18:57:44 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 20:35:10 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ typedef struct s_command
 	int		outpipe[2];
 	char	**argv;
 	char	*filepath;
-	t_dlist	*environ;
+	t_dlist	**environ;
 }	t_command;
 
-void	init_command(t_command *command, t_dlist *tokens, t_dlist *environ);
+void	init_command(t_command *command, t_dlist *tokens, t_dlist **environ);
 int		get_num_commands(t_dlist *tokens);
 pid_t	execute_command(t_command *command, t_dlist *environ);
 char	**get_arguments(t_dlist *tokens);
@@ -36,8 +36,8 @@ char	*find_command_path(t_dlist *environ, char *cmd);
 char	**get_env_paths(t_dlist *environ);
 void	close_if_fd(int fd);
 t_dlist	*get_next_command(t_dlist *tokens); // token;
-bool	is_builtin(char *cmd);
+bool	execute_builtin(t_command command);
 char	*get_command(t_dlist *tokens);
-bool	parent_builtin(t_command command);
+bool	is_exit_builtin(t_command *command);
 
 #endif /* !COMMAND_H */

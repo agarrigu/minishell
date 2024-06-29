@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 19:33:50 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 20:49:45 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	init_command(t_command *command, t_dlist *tokens, t_dlist *environ)
+void	init_command(t_command *command, t_dlist *tokens, t_dlist **environ)
 {
 	command->tokens = tokens;
 	command->position = 0;
@@ -56,8 +56,7 @@ pid_t	execute_command(t_command *command, t_dlist *environ)
 			close(command->outpipe[WRITE_END]);
 		}
 		command->argv = get_arguments(command->tokens);
-		if (is_builtin(command->argv[0]))
-			exit(0);
+		execute_builtin(*command); //
 		command->filepath = ft_strdup(command->argv[0]);
 		if (command->filepath[0] != '/' && command->filepath[0] != '.')
 			command->filepath = find_command_path(environ, command->filepath);

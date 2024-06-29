@@ -27,3 +27,9 @@ db_minishell
 
 # LSP files
 compile_flags.txt
+
+# vscode
+.vscode/
+
+#helpers
+src/helpers.*

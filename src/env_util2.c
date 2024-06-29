@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 19:44:37 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 19:44:47 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:11:37 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**ft_kvprtov(t_dlist *environ)
 	iter = envp;
 	while (environ)
 	{
-		pair = (t_kvpr*) environ->data;
+		pair = (t_kvpr *) environ->data;
 		*iter++ = ft_concat(3, pair->key, "=", pair->val);
 		environ = environ->next;
 	}

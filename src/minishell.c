@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:57:28 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/29 21:07:39 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "command.h"
+#include "builtins.h"
 
 bool	ft_parse(t_dlist *tokens)
 {
@@ -38,7 +39,7 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
-void	execer(t_dlist *tokens, t_dlist *environ)
+void	execer(t_dlist *tokens, t_dlist **environ)
 {
 	pid_t		*childs_pid;
 	int			commands;
@@ -46,14 +47,14 @@ void	execer(t_dlist *tokens, t_dlist *environ)
 
 	init_command(&command, tokens, environ);
 	commands = get_num_commands(tokens);
-	if (commands == 1 && parent_builtin(command))
-		return ;
+	if (commands == 1 && is_exit_builtin(&command))
+		ft_exit(command.argv, command.environ); // Handle error if exit fails
 	childs_pid = malloc(sizeof(childs_pid) * commands);
 	while (command.position < commands)
 	{
 		if (commands - command.position -1)
 			pipe(command.outpipe);
-		childs_pid[command.position] = execute_command(&command, environ);
+		childs_pid[command.position] = execute_command(&command, *environ);
 		close_if_fd(command.outpipe[WRITE_END]);
 		command.outpipe[WRITE_END] = 0;
 		close_if_fd(command.inpipe);
@@ -93,7 +94,7 @@ static void	tf_loop(t_dlist **environ)
 			ft_dlstclear(&tokens, &ft_token_cleaner);
 			continue ;
 		}
-		execer(tokens, *environ);
+		execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
