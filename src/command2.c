@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 21:54:11 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:57:26 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ char	*find_command_path(t_dlist *environ, char *cmd)
 	(free(aux), ft_freesplit(paths));
 	if (path == NULL)
 	{
-		printf("Error: command not found: %s\n", cmd);
-		exit(1); // error!!!!
+		printf("Error: command not found: %s\n", cmd); // it's not printing if between pipes!!!
+		exit(1); // We have to exit with the proper code and then print after catching
 	}
 	return (path);
 }
@@ -75,4 +75,15 @@ t_dlist	*get_next_command(t_dlist *tokens) // token
 		tokens = tokens->next;
 	}
 	return (tokens);
+}
+
+char	*get_name_value(const char *name, t_dlist *environ)
+{
+	while (environ)
+	{
+		if (ft_strcmp(get_kvpr_key(get_kvpr(environ)), name) == 0)
+			return (ft_strdup(get_kvpr_value(get_kvpr(environ))));
+		environ = environ->next;
+	}
+	return ("");
 }

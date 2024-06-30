@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:18:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:19:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:08:57 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_unset(char *argv[], t_dlist **environ)
 
 	viter = argv + 1;
 	if (!viter[1])
-		exit (EINVAL);
+		return (EINVAL);
 	while (*viter)
 	{
 		liter = *environ;
@@ -44,5 +44,5 @@ int	ft_unset(char *argv[], t_dlist **environ)
 		}
 		++viter;
 	}
-	exit(0);
+	return (0);
 }

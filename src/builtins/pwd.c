@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:58:56 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:19:19 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:08:38 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int	ft_pwd(char *argv[], t_dlist **environ)
 		exit(errno);
 	printf("%s\n", cwd);
 	free(cwd);
-	exit(0);
+	return (0);
 }

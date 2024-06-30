@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:19:13 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:08:26 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int	ft_export(char *argv[], t_dlist **environ)
 		if (!liter)
 			ft_dlstadd_back(environ, ft_dlstnew(nukvpr));
 	}
-	exit(0);
+	return (0);
 }

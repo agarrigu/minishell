@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:17:10 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:07:55 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	ft_echo(char *argv[], t_dlist **environ)
 	}
 	if (print_newline)
 		printf("\n");
-	exit(0);
+	return (0);
 }

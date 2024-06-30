@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 22:16:26 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:43:16 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
-void	execer(t_dlist *tokens, t_dlist **environ)
+int	execer(t_dlist *tokens, t_dlist **environ)
 {
 	pid_t		*childs_pid;
 	int			commands;
 	t_command	command;
 
-	init_command(&command, tokens, environ);
+	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
-	if (commands == 1 && is_exit_builtin(&command))
-		ft_exit(command.argv, command.environ); // Handle error if exit fails
+	if (commands == 1 && is_builtin(get_command(tokens)))
+		return (exec_parent_builtin(&command, environ));
 	childs_pid = malloc(sizeof(childs_pid) * commands);
 	while (command.position < commands)
 	{
 		if (commands - command.position -1)
 			pipe(command.outpipe);
-		childs_pid[command.position] = execute_command(&command, *environ);
+		childs_pid[command.position] = execute_command(&command, environ);
 		close_if_fd(command.outpipe[WRITE_END]);
 		command.outpipe[WRITE_END] = 0;
 		close_if_fd(command.inpipe);
@@ -64,7 +64,7 @@ void	execer(t_dlist *tokens, t_dlist **environ)
 	command.position = -1;
 	while (++command.position < commands)
 		waitpid(childs_pid[command.position], NULL, 0);
-	free(childs_pid);
+	return (free(childs_pid), 0);
 }
 
 void	handle_error(int ms_errno)

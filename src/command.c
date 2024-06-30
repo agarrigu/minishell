@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 20:49:45 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:26:10 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "builtins.h"
 
-void	init_command(t_command *command, t_dlist *tokens, t_dlist **environ)
+void	init_command(t_command *command, t_dlist *tokens)
 {
 	command->tokens = tokens;
 	command->position = 0;
 	command->inpipe = 0;
 	command->outpipe[WRITE_END] = 0;
-	command->environ = environ;
 }
 
 int	get_num_commands(t_dlist *tokens)
@@ -40,7 +40,7 @@ int	get_num_commands(t_dlist *tokens)
 	return (ncmd + 1);
 }
 
-pid_t	execute_command(t_command *command, t_dlist *environ)
+pid_t	execute_command(t_command *command, t_dlist **environ)
 {
 	pid_t	pid;
 
@@ -55,34 +55,39 @@ pid_t	execute_command(t_command *command, t_dlist *environ)
 			close(command->outpipe[READ_END]);
 			close(command->outpipe[WRITE_END]);
 		}
-		command->argv = get_arguments(command->tokens);
-		execute_builtin(*command); //
+		handle_redirections(command->tokens);
+		command->argv = get_arguments(command->tokens, *environ);
+		if (is_builtin(command->argv[0]))
+			exit (execute_builtin(*command, environ));
 		command->filepath = ft_strdup(command->argv[0]);
+		// HANDLE WRONG PATHS!!!!!
 		if (command->filepath[0] != '/' && command->filepath[0] != '.')
-			command->filepath = find_command_path(environ, command->filepath);
+			command->filepath = find_command_path(*environ, command->filepath);
 		execve (command->filepath, command->argv, NULL);
 		exit (0); // Hanle Error!!!!!!!
 	}
 	return (pid);
 }
 
-char	**get_arguments(t_dlist *tokens)
+char	**get_arguments(t_dlist *tokens, t_dlist *environ)
 {
-	int		narguments;
+	int		narg;
 	char	**argv;
 
-	narguments = get_num_arguments(tokens);
-	argv = malloc (sizeof(*argv) * (narguments + 2));
-	argv[narguments + 1] = NULL;
-	narguments = 1;
+	narg = get_num_arguments(tokens) + 1;
+	argv = malloc (sizeof(*argv) * (narg + 1));
+	argv[narg] = NULL;
+	narg = 0;
 	while (tokens)
 	{
-		if (get_type(get_token(tokens)) == TKN_CMD)
-			argv[0] = ft_strdup(get_value(get_token(tokens)));
-		if (get_type(get_token(tokens)) == TKN_ARG)
+		if (get_type(get_token(tokens)) == TKN_CMD
+			|| get_type(get_token(tokens)) == TKN_ARG
+			|| get_type(get_token(tokens)) == TKN_QWORD
+			|| get_type(get_token(tokens)) == TKN_NAME
+			|| get_type(get_token(tokens)) == TKN_DQWORD)
 		{
-			argv[narguments] = ft_strdup(get_value(get_token(tokens)));
-			narguments++;
+			argv[narg] = get_argument_value(get_token(tokens), environ);
+			narg++;
 		}
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;
@@ -93,16 +98,19 @@ char	**get_arguments(t_dlist *tokens)
 
 int	get_num_arguments(t_dlist *tokens)
 {
-	int	narguments;
+	int	narg;
 
-	narguments = 0;
+	narg = 0;
 	while (tokens)
 	{
-		if (get_type(get_token(tokens)) == TKN_ARG)
-			narguments++;
+		if (get_type(get_token(tokens)) == TKN_ARG
+			|| get_type(get_token(tokens)) == TKN_DQWORD
+			|| get_type(get_token(tokens)) == TKN_QWORD
+			|| get_type(get_token(tokens)) == TKN_NAME)
+			narg++;
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;
 		tokens = tokens->next;
 	}
-	return (narguments);
+	return (narg);
 }

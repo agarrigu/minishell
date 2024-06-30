@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 18:41:17 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 18:19:05 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:08:12 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ int	ft_env(char *argv[], t_dlist **environ)
 		printf("%s=%s\n", kvpr->key, kvpr->val);
 		liter = liter->next;
 	}
-	exit(0);
+	return (0);
 }
