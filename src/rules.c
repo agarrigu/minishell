@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:52:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:11:40 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/30 12:32:33 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 	arg ->					TKN_WORD
 							| TKN_QWORD
 							| TKN_DQWORD
+							| TKN_NAME
 
 */
 

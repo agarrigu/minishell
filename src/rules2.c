@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:47:35 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:04:21 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/06/30 12:32:58 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ bool	is_arg(t_dlist **tokens)
 	token = get_token(*tokens);
 	if (get_type(token) == TKN_WORD
 		|| get_type(token) == TKN_QWORD
-		|| get_type(token) == TKN_DQWORD)
+		|| get_type(token) == TKN_DQWORD
+		|| get_type(token) == TKN_NAME)
 	{
 		if (get_type(token) == TKN_WORD)
 			set_type(token, TKN_ARG);
