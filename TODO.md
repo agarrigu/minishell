@@ -22,20 +22,20 @@
 
 - [x] Display **prompt**
 - [x] Working **history**
-- [ ] Search and launch executable based on PATH, rel or abs path
-- [/] Implement `<`, `>`, `<<`, `>>`
-- [ ] Implement pipes
+- [x] Search and launch executable based on PATH, rel or abs path
+- [x] Implement `<`, `>`, `<<`, `>>`
+- [x] Implement pipes
 - [x] Handle enviroment vars
 - [ ] Handle $?
 - [x] Handle C-C C-D C-\
-- [ ] Implement builtins (no opts unless stated otherwise):
+- [x] Implement builtins (no opts unless stated otherwise):
   - [x] echo (with opt -n)
   - [x] cd (only rel and abs paths)
   - [x] pwd
   - [x] export
   - [x] unset
   - [x] env (no args)
-  - [ ] exit
+  - [x] exit
 
 ## Restrictions
 
