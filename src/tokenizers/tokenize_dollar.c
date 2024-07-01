@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 18:29:12 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/26 19:15:54 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:59:13 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ const char	*ft_tokenize_dollar(t_dlist **tokens, const char *mark)
 {
 	const char	*iter;
 
-	iter = mark;
-	if (ft_isname(iter[1]))
+	iter = mark + 1;
+	if (*iter == '?')
 	{
+		ft_addtkntolst(tokens, TKN_NAME, ft_strdup("$"));
 		++iter;
+	}
+	else if (ft_isname(*iter))
+	{
 		++mark;
 		while (ft_isname(*iter))
 			++iter;

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/01 16:31:16 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:07:36 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,9 @@ int	ft_echo(char *argv[], t_dlist **environ)
 		if (*argv[0])
 		{
 			printf("%s", *argv);
-			if (argv[1])
-				printf(" ");
+			(void) (argv[1] && printf(" "));
 		}
 		++argv;
 	}
-	if (print_newline)
-		printf("\n");
-	return (0);
+	return ((void)(print_newline && printf("\n")), 0);
 }
-
