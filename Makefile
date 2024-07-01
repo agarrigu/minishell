@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/01 12:37:03 by srodrigo         ###   ########.fr        #
+#    Updated: 2024/07/01 21:49:32 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ mainfiles = \
   command3.c \
   command4.c \
   builtins.c \
-#  helpers.c
+  helpers.c \
 # mainfiles
 
 cleanerfiles = \
@@ -54,6 +54,7 @@ tokenizerfiles = \
   tokenize_opperator.c \
   tokenize_quote.c \
   tokenize_word.c \
+  tokenize_ass.c \
 # tokenizers
 
 builtinfiles = \

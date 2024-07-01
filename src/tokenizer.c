@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/26 18:39:43 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:11:25 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	ft_tokenize(t_dlist **tokens, const char *s)
 			s = ft_tokenize_dquote(tokens, s);
 		else if (*s == '$')
 			s = ft_tokenize_dollar(tokens, s);
+		else if (*s == '=')
+			s = ft_tokenize_ass(tokens, s);
 		else if (ft_isopp(*s))
 			s = ft_tokenize_opperator(tokens, s);
 		else if (ft_last_typtok(*tokens) == TKN_OPP_DLESS)

@@ -64,6 +64,7 @@ fts		= \
   ft_removedlst \
   ft_split \
   ft_strchr \
+  ft_strchrnul \
   ft_strcmp \
   ft_strcpy \
   ft_strdup \

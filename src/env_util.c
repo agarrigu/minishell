@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:53:54 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 21:08:59 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:12:46 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ const char	*ft_parse_key(const char *str)
 {
 	char	*iter;
 
-	iter = ft_strchr(str, '=');
+	iter = ft_strchrnul(str, '=');
 	return (ft_substr(str, 0, iter - str));
 }
 
@@ -26,8 +26,11 @@ const char	*ft_parse_val(const char *str)
 {
 	char	*iter;
 
-	iter = ft_strchr(str, '=') + 1;
-	return (ft_strdup(iter));
+	iter = ft_strchr(str, '=');
+	if (iter)
+		return (ft_strdup(iter + 1));
+	else
+		return (NULL);
 }
 
 const char	*ft_get_val(t_dlist *lst, const char *key)

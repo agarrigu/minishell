@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 21:02:17 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/26 18:28:46 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:38:01 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ const char	*ft_tokenize_opperator(t_dlist **tokens, const char *mark);
 const char	*ft_tokenize_quote(t_dlist **tokens, const char *mark);
 const char	*ft_tokenize_dquote(t_dlist **tokens, const char *mark);
 const char	*ft_tokenize_word(t_dlist **tokens, const char *mark);
+const char	*ft_tokenize_ass(t_dlist **tokens, const char *mark);
 
 #endif /* !TOKENIZERS_H */
