@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/01 12:45:13 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:07:40 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,24 @@
 #include <errno.h>
 #include <string.h>
 
-char	*get_command(t_dlist *tokens)
+char	*get_command(t_dlist *tokens, t_dlist *environ)
 {
-	while (get_type(get_token(tokens)) != TKN_CMD)
+	t_token		*token;
+	t_typtok	token_type;
+
+	token = get_token(tokens);
+	token_type = get_type(token);
+	while (token_type != TKN_CMD && token_type != TKN_ECMD)
 		tokens = tokens->next;
+	if (token_type == TKN_ECMD)
+		expand_command(token, environ);
 	return (ft_strdup(get_value(get_token(tokens))));
 }
 
 char	*get_argument_value(t_token *token, t_dlist *environ)
 {
-	if (get_type(token) == TKN_NAME)
+	if (get_type(token) == TKN_NAME
+		|| get_type(token) == TKN_ECMD)
 		return (get_name_value(get_value(token), environ));
 	else if (get_type(token) == TKN_DQWORD)
 	{
@@ -84,6 +92,7 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	dollar = ft_strchr(dqword, '$');
 	expanded = malloc (sizeof(expanded) * (dollar - dqword + 1));
 	ft_strlcpy(expanded, dqword, (dollar - dqword + 1));
+printf("hola!");
 	dqword = ft_strchr(dollar, ' ');
 	if (dqword)
 	{
