@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/30 19:13:00 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 12:36:21 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ char	*get_command(t_dlist *tokens);
 char	*get_argument_value(t_token *token, t_dlist *environ);
 void	handle_redirections(t_dlist *tokens);
 bool	is_expandable(const char *dqword);
-char	*expand_dqword(const char *dqword);
+char	*expand_dqword(const char *dqword, t_dlist *environ);
+void	infile_redirection(t_token *token);
+void	outfile_redirection(t_token *token);
+void	outfile_appended_redirection(t_token *token);
+void	heredoc_redirection(t_token *token);
 
 #endif /* !COMMAND_H */
