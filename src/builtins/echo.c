@@ -6,13 +6,12 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/30 13:07:55 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:31:16 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
 #include "../../libft/ft.h"
 
 static int	tf_isvalidflag(const char *s)
@@ -25,27 +24,32 @@ static int	tf_isvalidflag(const char *s)
 int	ft_echo(char *argv[], t_dlist **environ)
 {
 	bool	print_newline;
-	char	**iter;
 
 	(void) environ;
 	print_newline = true;
-	iter = argv;
-	while (0 == ft_strncmp(*iter, "-n", 2))
+	++argv;
+	while (*argv)
 	{
-		if (tf_isvalidflag(&*iter[2]))
+		if (argv[0][0] == '-' && tf_isvalidflag(&argv[0][1]))
 		{
 			print_newline = false;
-			++iter;
+			++argv;
 		}
+		else
+			break ;
 	}
-	while (*iter)
+	while (*argv)
 	{
-		printf("%s", *iter);
-		if (!iter[1])
-			printf(" ");
-		++iter;
+		if (*argv[0])
+		{
+			printf("%s", *argv);
+			if (argv[1])
+				printf(" ");
+		}
+		++argv;
 	}
 	if (print_newline)
 		printf("\n");
 	return (0);
 }
+
