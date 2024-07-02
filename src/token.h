@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:48:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 03:10:06 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 03:16:09 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef enum e_typtok
 	TKN_CMD,
 	TKN_ECMD,
 	TKN_ARG,
-	TKN_ASS
+	TKN_ASS,
+	TKN_ASSWORD
 }	t_typtok;
 
 typedef struct s_token

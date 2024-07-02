@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/01 22:37:01 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/02 04:36:28 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	tf_do_the_thing(t_dlist **environ, t_kvpr *new_kvpr)
 		ft_dlstadd_back(environ, ft_dlstnew(new_kvpr));
 }
 
+//TODO: Asegurar que key sea valido (ft_isname())
 int	ft_export(char *argv[], t_dlist **environ)
 {
 	t_kvpr	*new_kvpr;
