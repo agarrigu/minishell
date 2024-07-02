@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 18:16:13 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:29:48 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ char	*get_name_value(const char *name, t_dlist *environ)
 			return (ft_strdup(get_kvpr_value(get_kvpr(environ))));
 		environ = environ->next;
 	}
-	return ("");
+	return (ft_strdup(""));
 }

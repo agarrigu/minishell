@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 18:21:31 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:16:57 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,29 @@ char	*expand_ass(const char *assword, t_dlist *environ)
 	char	*key;
 	char	*assign;
 	char	*value;
+	char	*aux;
 
 	assign = ft_strchr(assword, '=');
 	key = malloc (sizeof(key) * (assign - assword + 1));
 	ft_strlcpy(key, assword, (assign - assword + 1));
+	aux = key;
 	if (*key == '\'')
 		key = unquote(key);
 	else if (is_expandable(key))
 		key = expand_dqword(key, environ);
+	if (aux != key)
+		free(aux);
 	value = ft_strdup(assign + 1);
+	aux = value;
 	if (*value == '\'')
-		key = unquote(value);
+		value = unquote(value);
 	else if (is_expandable(value))
 		value = expand_dqword(value, environ);
-	return (ft_concat(3, key, "=", value));
+	if (aux != value)
+		free(aux);
+	aux = ft_concat(3, key, "=", value);
+	(free(key), free(value));
+	return (aux);
 }
 
 char	*unquote(const char *quote)

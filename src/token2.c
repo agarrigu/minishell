@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token 2.c                                          :+:      :+:    :+:   */
+/*   token2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:47:57 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 12:39:07 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:54:50 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ const char	*get_value(t_token *token)
 
 void	set_value(t_token *token, const char *value)
 {
+	free((void *)token->value);
 	token->value = ft_strdup(value);
 }
