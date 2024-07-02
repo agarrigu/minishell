@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 17:05:25 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:16:13 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	close_if_fd(int fd)
 		close(fd);
 }
 
-t_dlist	*get_next_command(t_dlist *tokens) // token
+t_dlist	*get_next_command(t_dlist *tokens)
 {
 	while (tokens)
 	{

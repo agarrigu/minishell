@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 16:32:04 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:21:31 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*expand_ass(const char *assword, t_dlist *environ)
 		key = unquote(value);
 	else if (is_expandable(value))
 		value = expand_dqword(value, environ);
-	printf("The key: %s - The value: %s\n", key, value);
 	return (ft_concat(3, key, "=", value));
 }
 

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 13:06:15 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:19:56 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "../builtins.h"
 #include "../env_util.h"
 #include "../../libft/ft.h"
+#include <errno.h>
+#include <string.h>
 
 static void	tf_change_val(t_kvpr *old, t_kvpr *nu)
 {
@@ -61,24 +63,44 @@ static void	tf_do_the_thing(t_dlist **environ, t_kvpr *new_kvpr)
 		ft_dlstadd_back(environ, ft_dlstnew(new_kvpr));
 }
 
-//TODO: Asegurar que key sea valido (ft_isname())
+static bool	is_valid_key(const char *str)
+{
+	if ((ft_isalpha(*str) || (*str == '_'))
+		&& !ft_strchr(str, ' '))
+		return (true);
+	else
+	{
+		ft_putstr_fd("Error: export ", 2);
+		ft_putstr_fd((char *) str, 2);
+		ft_putstr_fd(": not a valid identifier", 2);
+		ft_putchar_fd('\n', 2);
+		return (false);
+	}
+}
+
 int	ft_export(char *argv[], t_dlist **environ)
 {
-	t_kvpr	*new_kvpr;
+	t_kvpr		*new_kvpr;
+	const char	*key;
 
 	++argv;
 	if (!*argv)
 		return (ft_env(NULL, environ), 0);
 	while (*argv)
 	{
-		if ((*argv)[0] != '=' && (*argv)[ft_strlen(*argv) - 1] != '='
-			&& ft_strchr(*argv, '='))
+		if (**argv == '=')
+			key = *argv;
+		else
+			key = ft_parse_key(*argv);
+		if (is_valid_key(key))
 		{
 			new_kvpr = malloc(sizeof(*new_kvpr));
-			new_kvpr->key = ft_parse_key(*argv);
+			new_kvpr->key = key;
 			new_kvpr->val = ft_parse_val(*argv);
 			tf_do_the_thing(environ, new_kvpr);
 		}
+		else
+			return (1);
 		++argv;
 	}
 	return (0);
