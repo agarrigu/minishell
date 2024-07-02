@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/01 21:48:30 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/02 03:11:02 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
-	if (commands == 1 && is_builtin(get_command(tokens)))
+	if (commands == 1 && is_builtin(get_command(tokens, *environ)))
 		return (exec_parent_builtin(&command, environ));
 	childs_pid = malloc(sizeof(childs_pid) * commands);
 	while (command.position < commands)
@@ -89,13 +89,8 @@ static void	tf_loop(t_dlist **environ)
 			(add_history(user_input));
 		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
 			handle_error(MS_ERR_HEREDOC_INVDELIM);
-		print_tokens(tokens);
-		if (!ft_parse(tokens))
-		{
-			ft_dlstclear(&tokens, &ft_token_cleaner);
-			continue ;
-		}
-		execer(tokens, environ);
+		if (ft_parse(tokens))
+			execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}

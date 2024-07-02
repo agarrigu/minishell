@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:52:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/30 12:32:33 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:24:54 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 							| TKN_OPP_DGREAT WORD TKN_WORD
 
 	command_name ->			TKN_WORD
+							| TKN_NAME
 
 	args_list ->			arg args_list
 							| io_redir args_list
@@ -42,7 +43,6 @@
 							| TKN_QWORD
 							| TKN_DQWORD
 							| TKN_NAME
-
 */
 
 bool	is_command_line(t_dlist **tokens)
@@ -135,6 +135,12 @@ bool	is_command_name(t_dlist **tokens)
 	if (get_type(token) == TKN_WORD)
 	{
 		set_type(token, TKN_CMD);
+		*tokens = (*tokens)->next;
+		return (true);
+	}
+	if (get_type(token) == TKN_NAME)
+	{
+		set_type(token, TKN_ECMD);
 		*tokens = (*tokens)->next;
 		return (true);
 	}

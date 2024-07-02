@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/30 17:26:10 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:04:39 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	**get_arguments(t_dlist *tokens, t_dlist *environ)
 	while (tokens)
 	{
 		if (get_type(get_token(tokens)) == TKN_CMD
+			|| get_type(get_token(tokens)) == TKN_ECMD
 			|| get_type(get_token(tokens)) == TKN_ARG
 			|| get_type(get_token(tokens)) == TKN_QWORD
 			|| get_type(get_token(tokens)) == TKN_NAME

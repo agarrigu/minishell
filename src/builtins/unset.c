@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:18:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/30 13:08:57 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/01 22:38:01 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_unset(char *argv[], t_dlist **environ)
 	t_kvpr	*kvpr;
 
 	viter = argv + 1;
-	if (!viter[1])
+	if (!viter[0])
 		return (EINVAL);
 	while (*viter)
 	{
