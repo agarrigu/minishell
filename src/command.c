@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 14:26:03 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:36:58 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 #include <stdio.h>
 #include "builtins.h"
 
-void	init_command(t_command *command, t_dlist *tokens)
+void	init_command(t_command *cmd, t_dlist *tokens)
 {
-	command->tokens = tokens;
-	command->position = 0;
-	command->inpipe = 0;
-	command->outpipe[WRITE_END] = 0;
+	cmd->tokens = tokens;
+	cmd->position = 0;
+	cmd->inpipe = 0;
+	cmd->outpipe[WRITE_END] = 0;
 }
 
 int	get_num_commands(t_dlist *tokens)
@@ -40,31 +40,33 @@ int	get_num_commands(t_dlist *tokens)
 	return (ncmd + 1);
 }
 
-pid_t	execute_command(t_command *command, t_dlist **environ)
+/* NOTE: If EXECVE fails it has to exit() whith the proper error
+   and I guess there has to be some malloc'd cleaning */
+pid_t	execute_command(t_command *cmd, t_dlist **environ)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (command->inpipe)
-			(dup2(command->inpipe, STDIN_FILENO), close(command->inpipe));
-		if (command->outpipe[WRITE_END])
+		if (cmd->inpipe)
+			(dup2(cmd->inpipe, STDIN_FILENO), close(cmd->inpipe));
+		if (cmd->outpipe[WRITE_END])
 		{
-			dup2(command->outpipe[WRITE_END], STDOUT_FILENO);
-			close(command->outpipe[READ_END]);
-			close(command->outpipe[WRITE_END]);
+			dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO);
+			(close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
 		}
-		handle_redirections(command->tokens);
-		command->argv = get_arguments(command->tokens, *environ);
-		if (is_builtin(command->argv[0]))
-			exit (execute_builtin(*command, environ));
-		command->filepath = ft_strdup(command->argv[0]);
-		// HANDLE WRONG PATHS!!!!!
-		if (command->filepath[0] != '/' && command->filepath[0] != '.')
-			command->filepath = find_command_path(*environ, command->filepath);
-		execve (command->filepath, command->argv, NULL);
-		exit (0); // Hanle Error!!!!!!!
+		handle_redirections(cmd->tokens);
+		cmd->argv = get_arguments(cmd->tokens, *environ);
+		if (is_builtin(cmd->argv[0]))
+			exit (execute_builtin(*cmd, environ));
+		cmd->filepath = ft_strdup(cmd->argv[0]);
+		if (cmd->filepath[0] != '/' && cmd->filepath[0] != '.')
+			cmd->filepath = find_command_path(*environ, cmd->filepath);
+		else
+			check_command_path(cmd->filepath);
+		execve (cmd->filepath, cmd->argv, NULL);
+		exit (0);
 	}
 	return (pid);
 }

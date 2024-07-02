@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 15:43:37 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:32:04 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,20 @@ char	*get_end_name(char *c)
 		c++;
 	}
 	return (NULL);
+}
+
+// NOTE: ft_putend_fl is giving linking problems!!! So I had to print the \n
+// NOTE: check if the exit error is the correct
+void	check_command_path(char *cmd)
+{
+	if (access(cmd, F_OK) != 0)
+	{
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd((char *) cmd, 2);
+		ft_putchar_fd('\n', 2);
+		exit(errno);
+	}
+	return ;
 }

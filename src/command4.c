@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 14:42:17 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:40:24 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 #include <errno.h>
 #include <string.h>
 
+/* NOTE: ft_putend_fl is giving linking problems!!!
+   so I had to print \n (so far)
+   TODO That exit should be a return in case the redirection is for
+   a builtin executed by the parent, otherwise would exit minishell!!!
+*/
 void	infile_redirection(t_token *token)
 {
 	int			fd;
@@ -31,8 +36,12 @@ void	infile_redirection(t_token *token)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Error: %s: %s\n", strerror(errno), file);
-		exit (EXIT_FAILURE);
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd((char *) file, 2);
+		ft_putchar_fd('\n', 2);
+		exit (errno);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
