@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/01 16:07:40 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:45:35 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*get_argument_value(t_token *token, t_dlist *environ)
 		else
 			return (ft_strdup(get_value(token)));
 	}
+	else if (get_type(token) == TKN_ASSWORD)
+		return (expand_ass(get_value(token), environ));
 	else
 		return (ft_strdup(get_value(token)));
 }
@@ -92,8 +94,7 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	dollar = ft_strchr(dqword, '$');
 	expanded = malloc (sizeof(expanded) * (dollar - dqword + 1));
 	ft_strlcpy(expanded, dqword, (dollar - dqword + 1));
-printf("hola!");
-	dqword = ft_strchr(dollar, ' ');
+	dqword = get_end_name(dollar + 1);
 	if (dqword)
 	{
 		name = malloc(sizeof(expanded) * (dqword - dollar + 2));

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:50:33 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 02:58:08 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:41:39 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ int	ft_echo(char *argv[], t_dlist **environ)
 	}
 	return ((void)(print_newline && printf("\n")), 0);
 }
-

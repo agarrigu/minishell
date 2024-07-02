@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/01 16:04:39 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:26:03 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ char	**get_arguments(t_dlist *tokens, t_dlist *environ)
 			|| get_type(get_token(tokens)) == TKN_ARG
 			|| get_type(get_token(tokens)) == TKN_QWORD
 			|| get_type(get_token(tokens)) == TKN_NAME
-			|| get_type(get_token(tokens)) == TKN_DQWORD)
+			|| get_type(get_token(tokens)) == TKN_DQWORD
+			|| get_type(get_token(tokens)) == TKN_ASSWORD)
 		{
 			argv[narg] = get_argument_value(get_token(tokens), environ);
 			narg++;
@@ -107,7 +108,8 @@ int	get_num_arguments(t_dlist *tokens)
 		if (get_type(get_token(tokens)) == TKN_ARG
 			|| get_type(get_token(tokens)) == TKN_DQWORD
 			|| get_type(get_token(tokens)) == TKN_QWORD
-			|| get_type(get_token(tokens)) == TKN_NAME)
+			|| get_type(get_token(tokens)) == TKN_NAME
+			|| get_type(get_token(tokens)) == TKN_ASSWORD)
 			narg++;
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;

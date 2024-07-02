@@ -6,12 +6,14 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:01 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/01 15:53:32 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:34:40 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include <unistd.h>
+
+#include <stdio.h>
 
 bool	is_builtin(char *command)
 {

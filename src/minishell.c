@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 03:41:52 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:48:37 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	int			commands;
 	t_command	command;
 
-	print_tokens(tokens);
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_builtin(get_command(tokens, *environ)))

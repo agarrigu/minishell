@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:47:35 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 04:31:08 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:45:19 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	is_args_list(t_dlist **tokens)
 	return (true);
 }
 
-static const char *get_value4ass(t_token *token)
+static const char	*get_value4ass(t_token *token)
 {
 	if (token->type == TKN_NAME)
 		return (ft_strjoin("$", token->value));
@@ -41,11 +41,11 @@ static const char *get_value4ass(t_token *token)
 
 static void	do_the_ass_thing(t_dlist **tokens)
 {
-	t_token	*token;
-	const char *prev;
-	const char *next;
-	const char *ass;
-	
+	t_token		*token;
+	const char	*prev;
+	const char	*next;
+	const char	*ass;
+
 	token = get_token(*tokens);
 	prev = get_value4ass(get_token((*tokens)->prev));
 	next = get_value4ass(get_token((*tokens)->next));
@@ -74,7 +74,7 @@ bool	is_arg(t_dlist **tokens)
 		return (true);
 	}
 	else if (get_type(token) == TKN_ASS
-		&& get_type(get_token((*tokens)->prev))!= TKN_CMD)
+		&& get_type(get_token((*tokens)->prev)) != TKN_CMD)
 	{
 		do_the_ass_thing(tokens);
 		*tokens = (*tokens)->next;

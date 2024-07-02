@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/01 15:59:32 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:39:51 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,8 @@ void	outfile_redirection(t_token *token);
 void	outfile_appended_redirection(t_token *token);
 void	heredoc_redirection(t_token *token);
 void	expand_command(t_token *token, t_dlist *environ);
+char	*expand_ass(const char *assword, t_dlist *environ);
+char	*unquote(const char *quote);
+char	*get_end_name(char *c);
 
 #endif /* !COMMAND_H */
