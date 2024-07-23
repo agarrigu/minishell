@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 18:02:50 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:09:13 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 bool	ft_parse(t_dlist *tokens)
 {
-
 	if (tokens == NULL)
 		return (false);
 	if (is_command_line(&tokens))
