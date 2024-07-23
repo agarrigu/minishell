@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 12:48:37 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:44:44 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
-	if (commands == 1 && is_builtin(get_command(tokens, *environ)))
-		return (exec_parent_builtin(&command, environ));
+	if (commands == 1 && is_exit(get_command(tokens, *environ)))
+		return (exec_parent_exit(&command, environ));
 	childs_pid = malloc(sizeof(childs_pid) * commands);
 	while (command.position < commands)
 	{

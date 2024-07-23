@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:52:05 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/30 19:00:45 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:44:05 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		ft_unset(char *argv[], t_dlist **environ);
 int		ft_export(char *argv[], t_dlist **environ);
 int		ft_exit(char *argv[], t_dlist **environ);
 bool	is_builtin(char *command);
+bool	is_exit(char *command);
 int		execute_builtin(t_command command, t_dlist **environ);
-int		exec_parent_builtin(t_command *command, t_dlist **environ);
+int		exec_parent_exit(t_command *command, t_dlist **environ);
 
 #endif /* !BUILTINS_H */
