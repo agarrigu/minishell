@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 19:33:18 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:42:58 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_tokenize(t_dlist **tokens, const char *s)
 			s = ft_tokenize_io_here(tokens, s);
 			if (!s)
 				return (MS_ERR_HEREDOC_INVDELIM);
-		}	
+		}
 		else if (ft_isgraph(*s))
 			s = ft_tokenize_word(tokens, s);
 		else
