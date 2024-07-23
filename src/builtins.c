@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:01 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 14:34:40 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:42:49 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ bool	is_builtin(char *command)
 		|| ft_strcmp(command, "unset") == 0
 		|| ft_strcmp(command, "env") == 0
 		|| ft_strcmp(command, "exit") == 0)
+		return (true);
+	return (false);
+}
+
+bool	is_exit(char *command)
+{
+	if (ft_strcmp(command, "exit") == 0)
 		return (true);
 	return (false);
 }
@@ -46,7 +53,7 @@ int	execute_builtin(t_command command, t_dlist **environ)
 		return (ft_exit(command.argv, environ));
 }
 
-int	exec_parent_builtin(t_command *command, t_dlist **environ)
+int	exec_parent_exit(t_command *command, t_dlist **environ)
 {
 	int	fd;
 	int	ret;
