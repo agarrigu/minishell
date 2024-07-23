@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/02 14:44:04 by srodrigo         ###   ########.fr        #
+#    Updated: 2024/07/23 16:23:55 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC		= $(addprefix $(SRCDIR)/,$(mainfiles))
 SRC		+= $(addprefix $(CLNDIR)/,$(cleanerfiles))
 SRC		+= $(addprefix $(TKNDIR)/,$(tokenizerfiles))
 SRC		+= $(addprefix $(BIDIR)/,$(builtinfiles))
+OBJ		= $(SRC:.c=.o)
 
 .PHONY: all clean fclean re debug
 
@@ -85,7 +86,7 @@ all: $(NAME)
 
 debug: $(DBNAME)
 
-$(NAME): $(SRC) $(LFTDIR)/$(LFT)
+$(NAME): $(OBJ) $(LFTDIR)/$(LFT)
 	$(CC) $(CFLAGS) $^ $(LDLIB) -o $@
 
 $(DBNAME): $(SRC) $(LFTDIR)/$(DBLFT)
