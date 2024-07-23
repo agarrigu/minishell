@@ -6,21 +6,18 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 04:02:19 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:33:18 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/ft.h"
-#include "mstypes.h"
+#include "ms_error.h"
 #include "token.h"
 #include "isses.h"
 #include "tokenizers.h"
 
 int	ft_tokenize(t_dlist **tokens, const char *s)
 {
-	int	ms_errno;
-
-	ms_errno = MS_ERR_OK;
 	while (*s)
 	{
 		if (*s == '\'')
@@ -34,11 +31,15 @@ int	ft_tokenize(t_dlist **tokens, const char *s)
 		else if (ft_isopp(*s))
 			s = ft_tokenize_opperator(tokens, s);
 		else if (ft_last_typtok(*tokens) == TKN_OPP_DLESS)
-			s = ft_tokenize_io_here(tokens, s, &ms_errno);
+		{
+			s = ft_tokenize_io_here(tokens, s);
+			if (!s)
+				return (MS_ERR_HEREDOC_INVDELIM);
+		}	
 		else if (ft_isgraph(*s))
 			s = ft_tokenize_word(tokens, s);
 		else
 			++s;
 	}
-	return (ms_errno);
+	return (MS_ERR_OK);
 }

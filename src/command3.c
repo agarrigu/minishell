@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 20:24:50 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:52:44 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ char	*get_command(t_dlist *tokens, t_dlist *environ)
 	token = get_token(tokens);
 	token_type = get_type(token);
 	while (token_type != TKN_CMD && token_type != TKN_ECMD)
+	{
 		tokens = tokens->next;
+		token = get_token(tokens);
+		token_type = get_type(token);
+	}
 	if (token_type == TKN_ECMD)
 		expand_command(token, environ);
 	return ((char *)get_value(get_token(tokens)));
