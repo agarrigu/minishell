@@ -6,15 +6,13 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:18:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/01 22:38:01 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:45:28 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/ft.h"
 #include "../mstypes.h"
 #include "../cleaners.h"
-#include <errno.h>
-#include <stdlib.h>
 
 /**
  * According to POSIX, unset should not return error if the variable to unset
@@ -28,7 +26,7 @@ int	ft_unset(char *argv[], t_dlist **environ)
 
 	viter = argv + 1;
 	if (!viter[0])
-		return (EINVAL);
+		return (0);
 	while (*viter)
 	{
 		liter = *environ;

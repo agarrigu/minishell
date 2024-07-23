@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 18:05:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 19:12:52 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:34:10 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_print_ms_err(int ms_errno)
 	ft_putstr_fd(errs, STDERR_FILENO);
 }
 
-void	handle_error(int ms_errno, pid_t pid)
+void	handle_error(int ms_errno)
 {
 	if (ms_errno < 4200)
 	{
@@ -35,6 +35,4 @@ void	handle_error(int ms_errno, pid_t pid)
 	}
 	else
 		ft_print_ms_err(ms_errno);
-	if (0 == pid)
-		exit (ms_errno);
 }

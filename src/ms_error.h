@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 18:06:11 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 18:33:57 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:34:10 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # define MS_ERR_OK 4200
 # define MS_ERR_HEREDOC_INVDELIM 4201
 
-void	handle_error(int ms_errno, pid_t pid);
+void	handle_error(int ms_errno);
 
 #endif /* MS_ERROR_H */

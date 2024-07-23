@@ -6,18 +6,14 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 20:16:57 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:30:49 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "mstypes.h"
 #include <unistd.h>
-#include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "env_util.h"
-#include "builtins.h"
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>

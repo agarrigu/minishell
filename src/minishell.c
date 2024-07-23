@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:17:17 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:39:21 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	ft_parse(t_dlist *tokens)
 		return (true);
 	else
 	{
-		printf("Syntax error\n");
+		printf("Minishell: Syntax error\n");
 		return (false);
 	}
 }
@@ -46,7 +46,6 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	int			commands;
 	t_command	command;
 
-	print_tokens(tokens);
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_builtin(get_command(tokens, *environ)))
@@ -74,6 +73,7 @@ static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
 	static t_dlist	*tokens;
+	static int		ret;
 
 	(void) environ;
 	rl_catch_signals = 0;
@@ -85,9 +85,12 @@ static void	tf_loop(t_dlist **environ)
 		if (*user_input)
 			(add_history(user_input));
 		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
-			handle_error(MS_ERR_HEREDOC_INVDELIM, 42);
+			handle_error(MS_ERR_HEREDOC_INVDELIM);
 		if (ft_parse(tokens))
-			execer(tokens, environ);
+		{
+			ret = execer(tokens, environ);
+			handle_error(ret);
+		}
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}

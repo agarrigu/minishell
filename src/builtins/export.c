@@ -6,16 +6,16 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 18:19:56 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:51:50 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <stdlib.h>
 #include "../mstypes.h"
 #include "../builtins.h"
 #include "../env_util.h"
 #include "../../libft/ft.h"
-#include <errno.h>
 #include <string.h>
 
 static void	tf_change_val(t_kvpr *old, t_kvpr *nu)
@@ -100,7 +100,7 @@ int	ft_export(char *argv[], t_dlist **environ)
 			tf_do_the_thing(environ, new_kvpr);
 		}
 		else
-			return (1);
+			return (ft_putstr_fd("export: ", 2), EINVAL);
 		++argv;
 	}
 	return (0);
