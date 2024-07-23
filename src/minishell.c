@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 18:09:13 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:03:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include "command.h"
 #include "builtins.h"
+#include "ms_error.h"
 #include "helpers.h"
 
 bool	ft_parse(t_dlist *tokens)
@@ -45,6 +46,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	int			commands;
 	t_command	command;
 
+	print_tokens(tokens);
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_exit(get_command(tokens, *environ)))
@@ -68,11 +70,6 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	return (free(childs_pid), 0);
 }
 
-void	handle_error(int ms_errno)
-{
-	(void) ms_errno;
-}
-
 static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
@@ -88,7 +85,7 @@ static void	tf_loop(t_dlist **environ)
 		if (*user_input)
 			(add_history(user_input));
 		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
-			handle_error(MS_ERR_HEREDOC_INVDELIM);
+			handle_error(MS_ERR_HEREDOC_INVDELIM, 42);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
