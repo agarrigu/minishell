@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 16:36:58 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:31:35 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 void	init_command(t_command *cmd, t_dlist *tokens)
 {
+	cmd->argv = NULL;
+	cmd->filepath = NULL;
 	cmd->tokens = tokens;
 	cmd->position = 0;
 	cmd->inpipe = 0;
