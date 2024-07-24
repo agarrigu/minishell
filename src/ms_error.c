@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 18:05:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:34:10 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:17:06 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	ft_print_ms_err(int ms_errno)
 
 void	handle_error(int ms_errno)
 {
+	if (ms_errno == 4200 || ms_errno == 0)
+		return ;
 	if (ms_errno < 4200)
 	{
 		errno = ms_errno;
