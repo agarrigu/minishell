@@ -6,11 +6,10 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 19:44:37 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/06/29 21:11:37 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:19:23 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../libft/ft.h"
 #include "mstypes.h"
 

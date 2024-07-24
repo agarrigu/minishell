@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:22:27 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 19:42:27 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:27:04 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ const char	*ft_parse_key(const char *str);
 t_kvpr		*get_kvpr(t_dlist *environ);
 const char	*get_kvpr_key(t_kvpr *kvpr);
 const char	*get_kvpr_value(t_kvpr *kvpr);
+void		ft_add_msls_to_env(t_dlist **environ, int last_stat);
 
 #endif /* !ENV_UTIL_H */

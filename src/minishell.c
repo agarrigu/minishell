@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:39:21 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:55:21 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,44 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
+static void	tf_do_the_thing(int commands, t_command *command, int *childs_pid,
+	t_dlist **environ)
+{
+	while (command->position < commands)
+	{
+		if (commands - command->position -1)
+			pipe(command->outpipe);
+		childs_pid[command->position] = execute_command(command, environ);
+		close_if_fd(command->outpipe[WRITE_END]);
+		command->outpipe[WRITE_END] = 0;
+		close_if_fd(command->inpipe);
+		command->inpipe = command->outpipe[READ_END];
+		command->position++;
+		command->tokens = get_next_command(command->tokens);
+	}
+}
+
 int	execer(t_dlist *tokens, t_dlist **environ)
 {
 	pid_t		*childs_pid;
 	int			commands;
 	t_command	command;
+	int			ret;
 
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_builtin(get_command(tokens, *environ)))
-		return (exec_parent_builtin(&command, environ));
-	childs_pid = malloc(sizeof(childs_pid) * commands);
-	while (command.position < commands)
 	{
-		if (commands - command.position -1)
-			pipe(command.outpipe);
-		childs_pid[command.position] = execute_command(&command, environ);
-		close_if_fd(command.outpipe[WRITE_END]);
-		command.outpipe[WRITE_END] = 0;
-		close_if_fd(command.inpipe);
-		command.inpipe = command.outpipe[READ_END];
-		command.position++;
-		command.tokens = get_next_command(command.tokens);
+		ret = exec_parent_builtin(&command, environ);
+		ft_add_msls_to_env(environ, ret);
+		return (ret);
 	}
+	childs_pid = malloc(sizeof(childs_pid) * commands);
+	tf_do_the_thing(commands, &command, childs_pid, environ);
 	command.position = -1;
 	while (++command.position < commands)
-		waitpid(childs_pid[command.position], NULL, 0);
+		waitpid(childs_pid[command.position], &ret, 0);
+	ft_add_msls_to_env(environ, ret);
 	return (free(childs_pid), 0);
 }
 

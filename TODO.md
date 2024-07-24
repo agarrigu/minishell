@@ -26,7 +26,7 @@
 - [x] Implement `<`, `>`, `<<`, `>>`
 - [x] Implement pipes
 - [x] Handle enviroment vars
-- [ ] Handle $?
+- [x] Handle $?
 - [x] Handle C-C C-D C-\
 - [x] Implement builtins (no opts unless stated otherwise):
   - [x] echo (with opt -n)
