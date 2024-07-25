@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 18:16:06 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:11:31 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ char	*find_command_path(t_dlist **environ, t_command *cmd)
 	char	*path;
 	char	*aux;
 
+	path = NULL;
 	paths = get_env_paths(*environ);
 	aux = ft_strjoin("/", cmd->filepath);
 	i = 0;
-	while (paths[++i])
+	while (paths && paths[++i])
 	{
 		path = ft_strjoin(paths[i], aux);
 		if (access(path, F_OK) == 0)
@@ -40,13 +41,11 @@ char	*find_command_path(t_dlist **environ, t_command *cmd)
 		path = NULL;
 	}
 	(free(aux), ft_freesplit(paths));
-	if (path == NULL)
+	if (path == NULL || paths == NULL)
 	{
 		ft_putstr_fd("Error: command not found: ", 2);
-		ft_putstr_fd(cmd->filepath, 2);
-		ft_putchar_fd('\n', 2);
-		ft_complete_cleaner(cmd, environ);
-		exit(1);
+		(ft_putstr_fd(cmd->filepath, 2), ft_putchar_fd('\n', 2));
+		(ft_complete_cleaner(cmd, environ), exit(1));
 	}
 	return (path);
 }
@@ -55,6 +54,7 @@ char	**get_env_paths(t_dlist *environ)
 {
 	char	**paths;
 
+	paths = NULL;
 	while (environ)
 	{
 		if (ft_strcmp(get_kvpr_key(get_kvpr(environ)), "PATH") == 0)
