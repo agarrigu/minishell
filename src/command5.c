@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/23 20:30:49 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:45:18 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include "builtins.h"
+#include "cleaners.h"
+#include "../libft/ft.h"
 
 char	*expand_ass(const char *assword, t_dlist *environ)
 {
@@ -82,4 +85,17 @@ void	check_command_path(char *cmd)
 		exit(errno);
 	}
 	return ;
+}
+
+void	execute_child_builtin(t_command command, t_dlist **environ)
+{
+	int		ret;
+	t_dlist	*temp;
+
+	ret = execute_builtin(command, environ);
+	ft_command_cleaner(&command);
+	temp = ft_get_first_token(command.tokens);
+	ft_dlstclear(&temp, ft_token_cleaner);
+	ft_dlstclear(environ, ft_kvpr_cleaner);
+	exit(ret);
 }

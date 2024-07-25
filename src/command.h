@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 16:24:08 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:31:59 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_command
 	int		outpipe[2];
 	char	**argv;
 	char	*filepath;
+	pid_t	*childs_pid;
 }	t_command;
 
 void	init_command(t_command *command, t_dlist *tokens);
@@ -51,5 +52,6 @@ char	*expand_ass(const char *assword, t_dlist *environ);
 char	*unquote(const char *quote);
 char	*get_end_name(char *c);
 void	check_command_path(char *cmd);
+void	execute_child_builtin(t_command command, t_dlist **environ);
 
 #endif /* !COMMAND_H */

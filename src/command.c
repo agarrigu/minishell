@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/24 18:31:35 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:52:26 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_command(t_command *cmd, t_dlist *tokens)
 	cmd->position = 0;
 	cmd->inpipe = 0;
 	cmd->outpipe[WRITE_END] = 0;
+	cmd->childs_pid = NULL;
 }
 
 int	get_num_commands(t_dlist *tokens)
@@ -61,7 +62,7 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 		handle_redirections(cmd->tokens);
 		cmd->argv = get_arguments(cmd->tokens, *environ);
 		if (is_builtin(cmd->argv[0]))
-			exit (execute_builtin(*cmd, environ));
+			execute_child_builtin(*cmd, environ);
 		cmd->filepath = ft_strdup(cmd->argv[0]);
 		if (cmd->filepath[0] != '/' && cmd->filepath[0] != '.')
 			cmd->filepath = find_command_path(*environ, cmd->filepath);

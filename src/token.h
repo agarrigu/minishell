@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:48:19 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 03:16:09 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:14:56 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void		set_type(t_token *token, t_typtok type);
 const char	*get_value(t_token *token);
 void		set_value(t_token *token, const char *value);
 void		delete_node(t_dlist *tokens);
+t_dlist		*ft_get_first_token(t_dlist *dlst);
 
 #endif /* !TOKEN_H */

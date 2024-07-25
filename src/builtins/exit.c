@@ -6,7 +6,7 @@
 /*   By: bob <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:39:28 by bob               #+#    #+#             */
-/*   Updated: 2024/07/24 21:32:08 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:15:13 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,7 @@
 #include "../../libft/ft.h"
 #include "../cleaners.h"
 #include "../builtins.h"
-
-static t_dlist	*ft_get_first_token(t_dlist *dlst)
-{
-	while (dlst->prev)
-		dlst = dlst->prev;
-	return (dlst);
-}
+#include "../token.h"
 
 int	ft_exit(char *argv[], t_dlist **environ, t_command *command)
 {

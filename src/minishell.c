@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/25 16:38:55 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:56:46 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ bool	ft_parse(t_dlist *tokens)
 	}
 }
 
-static void	tf_do_the_thing(int commands, t_command *command, int *childs_pid,
-	t_dlist **environ)
+static void	tf_do_the_thing(int commands, t_command *command, t_dlist **environ)
 {
 	while (command->position < commands)
 	{
 		if (commands - command->position -1)
 			pipe(command->outpipe);
-		childs_pid[command->position] = execute_command(command, environ);
+		command->childs_pid[command->position]
+			= execute_command(command, environ);
 		close_if_fd(command->outpipe[WRITE_END]);
 		command->outpipe[WRITE_END] = 0;
 		close_if_fd(command->inpipe);
@@ -59,7 +59,6 @@ static void	tf_do_the_thing(int commands, t_command *command, int *childs_pid,
 
 int	execer(t_dlist *tokens, t_dlist **environ)
 {
-	pid_t		*childs_pid;
 	int			commands;
 	t_command	command;
 	static int	ret;
@@ -73,15 +72,15 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 		ft_command_cleaner(&command);
 		return (ret);
 	}
-	childs_pid = malloc(sizeof(childs_pid) * commands);
-	tf_do_the_thing(commands, &command, childs_pid, environ);
+	command.childs_pid = malloc(sizeof(pid_t) * commands);
+	tf_do_the_thing(commands, &command, environ);
 	command.position = -1;
 	while (++command.position < commands)
-		waitpid(childs_pid[command.position], &ret, 0);
+		waitpid(command.childs_pid[command.position], &ret, 0);
 	if (WIFEXITED(ret))
 		ret = WEXITSTATUS(ret);
 	ft_add_msls_to_env(environ, ret);
-	return (free(childs_pid), ret);
+	return (free(command.childs_pid), ret);
 }
 
 static void	tf_loop(t_dlist **environ)

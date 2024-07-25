@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:20:52 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/25 15:14:19 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:47:35 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 void	ft_command_cleaner(t_command *command)
 {
+	free(command->childs_pid);
 	ft_freesplit(command->argv);
 	free(command->filepath);
+	command->childs_pid = NULL;
+	command->argv = NULL;
+	command->filepath = NULL;
 }
