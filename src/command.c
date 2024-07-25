@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 18:28:24 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:19:02 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 			dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO);
 			(close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
 		}
-		handle_redirections(cmd->tokens);
+		handle_redirections(cmd->tokens, cmd, environ);
 		cmd->argv = get_arguments(cmd->tokens, *environ);
 		if (is_builtin(cmd->argv[0]))
 			execute_child_builtin(*cmd, environ);

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 20:39:22 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:11:32 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "token.h"
 #include <stdlib.h>
 #include <fcntl.h>
-#include <string.h>
+#include "cleaners.h"
 
 char	*get_command(t_dlist *tokens, t_dlist *environ)
 {
@@ -59,21 +59,29 @@ char	*get_argument_value(t_token *token, t_dlist *environ)
 		return (ft_strdup(get_value(token)));
 }
 
-void	handle_redirections(t_dlist *tokens)
+void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ)
 {
+	int	ret;
+
+	ret = 0;
 	while (tokens)
 	{
 		if (get_type(get_token(tokens)) == TKN_OPP_LESS)
-			infile_redirection(get_token(tokens));
+			ret = infile_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_GREAT)
-			outfile_redirection(get_token(tokens));
+			ret = outfile_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_DGREAT)
-			outfile_appended_redirection(get_token(tokens));
+			ret = outfile_appended_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_IO_HERE)
-			heredoc_redirection(get_token(tokens));
+			ret = heredoc_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;
 		tokens = tokens->next;
+	}
+	if (ret != 0)
+	{
+		ft_complete_cleaner(cmd, environ);
+		exit(ret);
 	}
 }
 

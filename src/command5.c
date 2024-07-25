@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 18:19:58 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:26:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ char	*expand_ass(const char *assword, t_dlist *environ)
 	if (aux != value)
 		free(aux);
 	aux = ft_concat(3, key, "=", value);
-	(free(key), free(value));
-	return (aux);
+	return (free(key), free(value), aux);
 }
 
 char	*unquote(const char *quote)
