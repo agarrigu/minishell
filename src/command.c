@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 18:19:27 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:28:24 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "builtins.h"
+#include "cleaners.h"
 
 void	init_command(t_command *cmd, t_dlist *tokens)
 {
@@ -69,7 +70,7 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 		else
 			check_command_path(cmd, environ);
 		execve (cmd->filepath, cmd->argv, NULL);
-		exit (0);
+		(ft_complete_cleaner(cmd, environ), exit(EXIT_FAILURE));
 	}
 	return (pid);
 }
