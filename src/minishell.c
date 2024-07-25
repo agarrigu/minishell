@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/25 15:13:14 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:38:55 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	pid_t		*childs_pid;
 	int			commands;
 	t_command	command;
-	int			ret;
+	static int	ret;
 
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
@@ -78,8 +78,10 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	command.position = -1;
 	while (++command.position < commands)
 		waitpid(childs_pid[command.position], &ret, 0);
+	if (WIFEXITED(ret))
+		ret = WEXITSTATUS(ret);
 	ft_add_msls_to_env(environ, ret);
-	return (free(childs_pid), 0);
+	return (free(childs_pid), ret);
 }
 
 static void	tf_loop(t_dlist **environ)
@@ -101,7 +103,7 @@ static void	tf_loop(t_dlist **environ)
 		if (ft_parse(tokens))
 		{
 			ret = execer(tokens, environ);
-			handle_error(ret);
+			(void) (ret != 0 && (handle_error(ret), 42));
 		}
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
