@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/24 21:12:11 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:13:14 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	{
 		ret = exec_parent_builtin(&command, environ);
 		ft_add_msls_to_env(environ, ret);
+		ft_command_cleaner(&command);
 		return (ret);
 	}
 	childs_pid = malloc(sizeof(childs_pid) * commands);
