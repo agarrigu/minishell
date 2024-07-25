@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 17:52:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:19:27 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 			execute_child_builtin(*cmd, environ);
 		cmd->filepath = ft_strdup(cmd->argv[0]);
 		if (cmd->filepath[0] != '/' && cmd->filepath[0] != '.')
-			cmd->filepath = find_command_path(*environ, cmd->filepath);
+			cmd->filepath = find_command_path(environ, cmd);
 		else
-			check_command_path(cmd->filepath);
+			check_command_path(cmd, environ);
 		execve (cmd->filepath, cmd->argv, NULL);
 		exit (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 17:31:59 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:18:05 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		get_num_commands(t_dlist *tokens);
 pid_t	execute_command(t_command *command, t_dlist **environ);
 char	**get_arguments(t_dlist *tokens, t_dlist *environ);
 int		get_num_arguments(t_dlist *tokens);
-char	*find_command_path(t_dlist *environ, char *cmd);
+char	*find_command_path(t_dlist **environ, t_command *cmd);
 char	**get_env_paths(t_dlist *environ);
 void	close_if_fd(int fd);
 t_dlist	*get_next_command(t_dlist *tokens);
@@ -51,7 +51,7 @@ void	expand_command(t_token *token, t_dlist *environ);
 char	*expand_ass(const char *assword, t_dlist *environ);
 char	*unquote(const char *quote);
 char	*get_end_name(char *c);
-void	check_command_path(char *cmd);
+void	check_command_path(t_command *cmd, t_dlist **environ);
 void	execute_child_builtin(t_command command, t_dlist **environ);
 
 #endif /* !COMMAND_H */

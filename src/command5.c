@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 17:45:18 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:19:58 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,16 @@ char	*get_end_name(char *c)
 
 // NOTE: ft_putend_fl is giving linking problems!!! So I had to print the \n
 // NOTE: check if the exit error is the correct
-void	check_command_path(char *cmd)
+void	check_command_path(t_command *cmd, t_dlist **environ)
 {
-	if (access(cmd, F_OK) != 0)
+	if (access(cmd->filepath, F_OK) != 0)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd(": ", 2);
-		ft_putstr_fd((char *) cmd, 2);
+		ft_putstr_fd((char *) cmd->filepath, 2);
 		ft_putchar_fd('\n', 2);
+		ft_complete_cleaner(cmd, environ);
 		exit(errno);
 	}
 	return ;
@@ -90,12 +91,8 @@ void	check_command_path(char *cmd)
 void	execute_child_builtin(t_command command, t_dlist **environ)
 {
 	int		ret;
-	t_dlist	*temp;
 
 	ret = execute_builtin(command, environ);
-	ft_command_cleaner(&command);
-	temp = ft_get_first_token(command.tokens);
-	ft_dlstclear(&temp, ft_token_cleaner);
-	ft_dlstclear(environ, ft_kvpr_cleaner);
+	ft_complete_cleaner(&command, environ);
 	exit(ret);
 }

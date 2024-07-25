@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/24 18:46:37 by algarrig         ###   ########.fr        #
+#    Updated: 2024/07/25 18:20:21 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ cleanerfiles = \
   kvpr_cleaner.c \
   token_cleaner.c \
   command_cleaner.c \
+  complete_cleaner.c \
 # cleanerfiles
 
 tokenizerfiles = \

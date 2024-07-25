@@ -6,30 +6,30 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/02 19:29:48 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:16:06 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "mstypes.h"
 #include <unistd.h>
 #include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "env_util.h"
+#include "cleaners.h"
 
 /* NOTE: linking problems with ft_putend_fd (as previously)
    We have to exit with the proper code
 */
-char	*find_command_path(t_dlist *environ, char *cmd)
+char	*find_command_path(t_dlist **environ, t_command *cmd)
 {
 	char	**paths;
 	int		i;
 	char	*path;
 	char	*aux;
 
-	paths = get_env_paths(environ);
-	aux = ft_strjoin("/", cmd);
+	paths = get_env_paths(*environ);
+	aux = ft_strjoin("/", cmd->filepath);
 	i = 0;
 	while (paths[++i])
 	{
@@ -43,8 +43,9 @@ char	*find_command_path(t_dlist *environ, char *cmd)
 	if (path == NULL)
 	{
 		ft_putstr_fd("Error: command not found: ", 2);
-		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(cmd->filepath, 2);
 		ft_putchar_fd('\n', 2);
+		ft_complete_cleaner(cmd, environ);
 		exit(1);
 	}
 	return (path);
