@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:51:50 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:50:10 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,8 @@ int	ft_export(char *argv[], t_dlist **environ)
 	while (*argv)
 	{
 		if (**argv == '=')
-			key = *argv;
-		else
-			key = ft_parse_key(*argv);
+			return (ft_putstr_fd("export: ", 2), EINVAL);
+		key = ft_parse_key(*argv);
 		if (is_valid_key(key))
 		{
 			new_kvpr = malloc(sizeof(*new_kvpr));
@@ -100,7 +99,10 @@ int	ft_export(char *argv[], t_dlist **environ)
 			tf_do_the_thing(environ, new_kvpr);
 		}
 		else
+		{
+			free((char *) key);
 			return (ft_putstr_fd("export: ", 2), EINVAL);
+		}
 		++argv;
 	}
 	return (0);

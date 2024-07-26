@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/25 18:20:21 by algarrig         ###   ########.fr        #
+#    Updated: 2024/07/26 20:14:14 by srodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ mainfiles = \
   command4.c \
   command5.c \
   builtins.c \
-  helpers.c \
 # mainfiles
 
 cleanerfiles = \
