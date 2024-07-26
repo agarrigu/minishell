@@ -6,7 +6,7 @@
 /*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:23:26 by bob               #+#    #+#             */
-/*   Updated: 2024/05/13 21:18:22 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:12:33 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 #include <readline/readline.h>
 
 /**
- * NOTE(algarrig): very hacky but it works. for now.
- * TODO(algarrig): make it less hacky, here is what we need to do:
- *   - clear/ignore/free the current rl_line_buffer
- *   - jump to a new line
- *   - display prompt
- *   - ???
- *   - profit
- *
  * NOTE(algarrig): removed errno safety cos it seems uneeded for now.
  * easily reinstated:
  *	int	temp_error;
@@ -36,8 +28,9 @@ void	ft_signal_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		printf("\n");
+		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n$>");
 		rl_redisplay();
 	}
 }
