@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 21:19:02 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:08:57 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "builtins.h"
 #include "cleaners.h"
+#include "signal_util.h"
 
 void	init_command(t_command *cmd, t_dlist *tokens)
 {
@@ -50,16 +51,15 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 {
 	pid_t	pid;
 
+	ft_ignore_sigint();
 	pid = fork();
 	if (pid == 0)
 	{
 		if (cmd->inpipe)
 			(dup2(cmd->inpipe, STDIN_FILENO), close(cmd->inpipe));
 		if (cmd->outpipe[WRITE_END])
-		{
-			dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO);
-			(close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
-		}
+			(dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO),
+				close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
 		handle_redirections(cmd->tokens, cmd, environ);
 		cmd->argv = get_arguments(cmd->tokens, *environ);
 		if (is_builtin(cmd->argv[0]))

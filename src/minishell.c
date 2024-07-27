@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/27 16:43:17 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:02:18 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 		waitpid(command.childs_pid[command.position], &ret, 0);
 	if (WIFEXITED(ret))
 		ret = WEXITSTATUS(ret);
+	ft_unignore_sigint();
 	ft_add_msls_to_env(environ, ret);
 	return (free(command.childs_pid), ret);
 }
