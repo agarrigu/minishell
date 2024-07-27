@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 21:11:32 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:46:23 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	char	*dollar;
 	char	*expanded;
 	char	*name;
-	char	*tmp;
 
 	dollar = ft_strchr(dqword, '$');
 	expanded = malloc (sizeof(expanded) * (dollar - dqword + 1));
@@ -111,18 +110,18 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	dqword = get_end_name(dollar + 1);
 	if (dqword)
 	{
-		name = malloc(sizeof(expanded) * (dqword - dollar + 2));
+		name = malloc(sizeof(expanded) * (dqword - dollar));
 		ft_strlcpy(name, dollar + 1, (dqword - dollar));
 		expanded = ft_strjoin_freeb(expanded, get_name_value(name, environ));
 		if (is_expandable(dqword))
-			tmp = expand_dqword(dqword, environ);
-		expanded = ft_strjoin_freeb(expanded, tmp);
+			expanded = ft_strjoin_freeb(expanded,
+					expand_dqword(dqword, environ));
+		else
+			expanded = ft_strjoin_freel(expanded, dqword);
+		free(name);
 	}
 	else
-	{
-		name = ft_strdup(dollar + 1);
-		expanded = ft_strjoin_freeb(expanded, get_name_value(name, environ));
-	}
-	free(name);
+		expanded = ft_strjoin_freeb(expanded,
+				get_name_value(ft_strdup(dollar + 1), environ));
 	return (expanded);
 }

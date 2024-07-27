@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 21:26:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/27 18:46:50 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_end_name(char *c)
 {
 	while (*c)
 	{
-		if (*c == '$' || *c == ' ')
+		if (*c == '$' || ft_isblank(*c))
 			return (c);
 		c++;
 	}
