@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/27 16:39:32 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:43:17 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #include <unistd.h>
 #include "command.h"
 #include "builtins.h"
-#include "ms_error.h"
 
 bool	ft_parse(t_dlist *tokens)
 {
@@ -95,8 +94,7 @@ static void	tf_loop(t_dlist **environ)
 			break ;
 		if (*user_input)
 			(add_history(user_input));
-		if (ft_tokenize(&tokens, user_input) == MS_ERR_HEREDOC_INVDELIM)
-			handle_error(MS_ERR_HEREDOC_INVDELIM);
+		ft_tokenize(&tokens, user_input);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);

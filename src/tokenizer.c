@@ -6,12 +6,11 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 19:42:58 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:44:32 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/ft.h"
-#include "ms_error.h"
 #include "token.h"
 #include "isses.h"
 #include "tokenizers.h"
@@ -34,12 +33,12 @@ int	ft_tokenize(t_dlist **tokens, const char *s)
 		{
 			s = ft_tokenize_io_here(tokens, s);
 			if (!s)
-				return (MS_ERR_HEREDOC_INVDELIM);
+				return (-1);
 		}
 		else if (ft_isgraph(*s))
 			s = ft_tokenize_word(tokens, s);
 		else
 			++s;
 	}
-	return (MS_ERR_OK);
+	return (0);
 }

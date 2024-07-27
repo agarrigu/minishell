@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/26 20:14:14 by srodrigo         ###   ########.fr        #
+#    Updated: 2024/07/27 16:44:19 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ mainfiles = \
   heredoc.c \
   isses.c \
   minishell.c \
-  ms_error.c \
   signal_util.c \
   token.c \
   token2.c \
