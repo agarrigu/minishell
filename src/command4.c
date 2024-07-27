@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 21:14:04 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:36:19 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 
 /* NOTE: ft_putend_fl is giving linking problems!!!
    so I had to print \n (so far)
-   TODO That exit should be a return in case the redirection is for
-   a builtin executed by the parent, otherwise would exit minishell!!!
 */
 int	infile_redirection(t_token *token)
 {

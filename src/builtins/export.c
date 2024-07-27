@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/26 20:50:10 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:30:57 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static bool	is_valid_key(const char *str)
 		return (true);
 	else
 	{
-		ft_putstr_fd("Error: export ", 2);
+		ft_putstr_fd("export ", 2);
 		ft_putstr_fd((char *) str, 2);
-		ft_putstr_fd(": not a valid identifier", 2);
+		ft_putstr_fd(": Not a valid identifier", 2);
 		ft_putchar_fd('\n', 2);
 		return (false);
 	}
@@ -89,7 +89,8 @@ int	ft_export(char *argv[], t_dlist **environ)
 	while (*argv)
 	{
 		if (**argv == '=')
-			return (ft_putstr_fd("export: ", 2), EINVAL);
+			return (ft_putstr_fd("export: Not a valid identifier\n", 2),
+				EINVAL);
 		key = ft_parse_key(*argv);
 		if (is_valid_key(key))
 		{
@@ -99,10 +100,7 @@ int	ft_export(char *argv[], t_dlist **environ)
 			tf_do_the_thing(environ, new_kvpr);
 		}
 		else
-		{
-			free((char *) key);
-			return (ft_putstr_fd("export: ", 2), EINVAL);
-		}
+			return (free((char *) key), EINVAL);
 		++argv;
 	}
 	return (0);

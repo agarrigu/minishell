@@ -6,7 +6,7 @@
 /*   By: bob <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:39:28 by bob               #+#    #+#             */
-/*   Updated: 2024/07/25 18:18:39 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:24:04 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	ft_exit(char *argv[], t_dlist **environ, t_command *command)
 
 	ret = 0;
 	if (argv[1] && argv[2])
-		return (ft_putstr_fd("exit: ", 2), E2BIG);
+		return (ft_putstr_fd("exit: Too many arguments\n", 2), E2BIG);
 	if (argv[1] && !ft_stris(argv[1], &ft_isdigit))
-		return (ft_putstr_fd("exit: ", 2), EINVAL);
+		return (ft_putstr_fd("exit: Invalid argument\n", 2), EINVAL);
 	if (argv[1])
 		ret = ft_atoi(argv[1]);
 	printf("exit\n");
