@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/27 16:44:19 by algarrig         ###   ########.fr        #
+#    Updated: 2024/07/28 18:59:16 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ mainfiles = \
   env_util2.c \
   env_util2.c \
   heredoc.c \
+  helpers.c \
   isses.c \
   minishell.c \
   signal_util.c \
@@ -48,16 +49,6 @@ cleanerfiles = \
   command_cleaner.c \
   complete_cleaner.c \
 # cleanerfiles
-
-tokenizerfiles = \
-  tokenize_dollar.c \
-  tokenize_dquote.c \
-  tokenize_io_here.c \
-  tokenize_opperator.c \
-  tokenize_quote.c \
-  tokenize_word.c \
-  tokenize_ass.c \
-# tokenizers
 
 builtinfiles = \
   cd.c \

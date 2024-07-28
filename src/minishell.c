@@ -6,24 +6,24 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/27 17:02:18 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:23:59 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "../libft/ft.h"
-#include "signal_util.h"
-#include "tokenizer.h"
-#include "env_util.h"
-#include "cleaners.h"
-#include "mstypes.h"
-#include <stdlib.h>
-#include "rules.h"
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include "rules.h"
+#include "mstypes.h"
 #include "command.h"
+#include "env_util.h"
+#include "cleaners.h"
 #include "builtins.h"
+#include "tokenizer.h"
+#include "../libft/ft.h"
+#include "signal_util.h"
 
 bool	ft_parse(t_dlist *tokens)
 {

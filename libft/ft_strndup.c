@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
+/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 20:06:37 by bob               #+#    #+#             */
-/*   Updated: 2024/07/28 19:21:15 by algarrig         ###   ########.fr       */
+/*   Created: 2024/07/28 18:51:21 by algarrig          #+#    #+#             */
+/*   Updated: 2024/07/28 18:51:50 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
-# include "../libft/ft.h"
+#include <stdlib.h>
+#include "ft.h"
 
-void	ft_tokenize(t_dlist **tokens, const char *user_input);
+char	*ft_strndup(const char *s, size_t n)
+{
+	char	*dup;
+	char	*iter;
 
-#endif /* !TOKENIZER_H */
+	dup = malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	iter = dup;
+	while (*s && n--)
+		*iter++ = *s++;
+	*iter = '\0';
+	return (dup);
+}

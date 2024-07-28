@@ -6,35 +6,28 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:47 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 15:44:14 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:11:22 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/ft.h"
+#include <stdbool.h>
 
 int	ft_isopp(int c)
 {
-	return (c == '>' || c == '<' || c == '$' || c == '|' || c == '\''
-		|| c == '"' || c == '=');
+	return (c == '>' || c == '<' || c == '|');
 }
 
-int	ft_isnonquoteopp(int c)
+int	ft_islongopp(const char *s)
 {
-	return (c == '>' || c == '<' || c == '!' || c == '$' || c == '|');
+	return (ft_strncmp("<<", s, 2) || ft_strncmp(">>", s, 2));
 }
 
-int	ft_isquoteopp(int c)
+bool	ft_is_opp_cand(int prev, int curr)
 {
-	return (c == '\'' || c == '"');
-}
-
-int	ft_isname(int c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-int	ft_isass(int c)
-{
-	return (ft_isgraph(c) && (!ft_isopp(c) || c == '\'' || c == '"'
-			|| c == '$'));
+	if (prev == '<' && curr == '<')
+		return (true);
+	if (prev == '>' && curr == '>')
+		return (true);
+	return (false);
 }

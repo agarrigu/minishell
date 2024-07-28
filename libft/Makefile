@@ -80,6 +80,7 @@ fts		= \
   ft_strmapi \
   ft_strncmp \
   ft_strnstr \
+  ft_strndup \
   ft_strrchr \
   ft_strtrim \
   ft_substr \
