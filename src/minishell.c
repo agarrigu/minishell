@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/28 19:23:59 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:44:27 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	tf_loop(t_dlist **environ)
 	static char		*user_input;
 	static t_dlist	*tokens;
 
+	(void) environ;
 	rl_catch_signals = 0;
 	while (42)
 	{

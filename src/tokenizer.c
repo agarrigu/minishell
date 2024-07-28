@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/28 19:20:28 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:37:54 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	tf_tokenize_opperator(t_dlist **tokens, const char *mark, int len)
 		ft_addtkntolst(tokens, TKN_OPP_GREAT, NULL);
 	else if (len == 1 && *mark == '|')
 		ft_addtkntolst(tokens, TKN_OPP_VLINE, NULL);
-	else if (len == 2 && ft_strncmp("<<", mark, 2))
+	else if (len == 2 && ft_strncmp("<<", mark, 2) == 0)
 		ft_addtkntolst(tokens, TKN_OPP_DLESS, NULL);
-	else if (len == 2 && ft_strncmp(">>", mark, 2))
+	else if (len == 2 && ft_strncmp(">>", mark, 2) == 0)
 		ft_addtkntolst(tokens, TKN_OPP_DGREAT, NULL);
 }
 
@@ -36,6 +36,8 @@ static const char	*tf_categorize_token(t_dlist **tokens, const char *mark,
 		tf_tokenize_opperator(tokens, mark, len);
 	else if (ft_isgraph(*mark))
 		ft_addtkntolst(tokens, TKN_WORD, ft_strndup(mark, len));
+	if (ft_isblank(mark[len]))
+		++mark;
 	return (mark + len);
 }
 
@@ -61,14 +63,14 @@ void	ft_tokenize(t_dlist **tokens, const char *s)
 			;
 		else if (ft_isopp(s[-1]) && !ft_isopp(s[0]))
 			mark = tf_categorize_token(tokens, mark, s - mark);
-		else if ((*s == '\'' && ft_strchr(s, '\''))
-			|| (*s == '"' && ft_strchr(s, '"')))
+		else if ((*s == '\'' && ft_strchr(s + 1, '\''))
+			|| (*s == '"' && ft_strchr(s + 1, '"')))
 			s = tf_tokenize_quote(s);
 		else if (ft_isopp(*s))
 			mark = tf_categorize_token(tokens, mark, s - mark);
 		else if (ft_isblank(*s))
 			mark = tf_categorize_token(tokens, mark, s - mark);
-		else if (mark != s && ft_isgraph(s[-1]))
+		else if (ft_isgraph(s[-1]))
 			;
 		else
 			mark = s;
