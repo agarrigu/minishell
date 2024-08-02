@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/28 20:37:54 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:44:17 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static const char	*tf_categorize_token(t_dlist **tokens, const char *mark,
 	return (mark + len);
 }
 
-static const char	*tf_tokenize_quote(const char *s)
+static const char	*tf_quote_state(const char *s)
 {
 	if (*s == '\'')
 		return (ft_strchr(++s, '\''));
@@ -56,21 +56,21 @@ void	ft_tokenize(t_dlist **tokens, const char *s)
 
 	if (!s || !*s)
 		return ;
-	mark = s++;
+	mark = s;
 	while (*s && mark)
 	{
-		if (ft_is_opp_cand(s[-1], s[0]))
+		if (mark != s && ft_islongopp(s - 1))
 			;
-		else if (ft_isopp(s[-1]) && !ft_isopp(s[0]))
+		else if (mark != s && ft_isopp(s[-1]) && !ft_isopp(s[0]))
 			mark = tf_categorize_token(tokens, mark, s - mark);
 		else if ((*s == '\'' && ft_strchr(s + 1, '\''))
 			|| (*s == '"' && ft_strchr(s + 1, '"')))
-			s = tf_tokenize_quote(s);
-		else if (ft_isopp(*s))
+			s = tf_quote_state(s);
+		else if (mark != s && ft_isopp(*s))
 			mark = tf_categorize_token(tokens, mark, s - mark);
 		else if (ft_isblank(*s))
 			mark = tf_categorize_token(tokens, mark, s - mark);
-		else if (ft_isgraph(s[-1]))
+		else if (mark != s && ft_isgraph(s[-1]))
 			;
 		else
 			mark = s;

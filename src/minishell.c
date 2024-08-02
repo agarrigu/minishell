@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/28 20:44:27 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:46:16 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	return (free(command.childs_pid), ret);
 }
 
+#include "helpers.h"
+
 static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
@@ -97,6 +99,7 @@ static void	tf_loop(t_dlist **environ)
 		if (*user_input)
 			(add_history(user_input));
 		ft_tokenize(&tokens, user_input);
+		print_tokens(tokens);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
