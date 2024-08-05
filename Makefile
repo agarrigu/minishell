@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/08/05 18:23:22 by algarrig         ###   ########.fr        #
+#    Updated: 2024/08/05 20:28:43 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,25 +22,26 @@ LDLIB	= -lft -lreadline -L$(LFTDIR)
 MAKE 	= make --no-print-directory
 
 mainfiles = \
-  env_util.c \
-  env_util2.c \
-  env_util2.c \
-  heredoc.c \
-  helpers.c \
-  isses.c \
-  minishell.c \
-  signal_util.c \
-  token.c \
-  token2.c \
-  tokenizer.c \
-  rules.c \
-  rules2.c \
+  builtins.c \
   command.c \
   command2.c \
   command3.c \
   command4.c \
   command5.c \
-  builtins.c \
+  env_util.c \
+  env_util2.c \
+  env_util2.c \
+  expander.c \
+  helpers.c \
+  heredoc.c \
+  isses.c \
+  minishell.c \
+  rules.c \
+  rules2.c \
+  signal_util.c \
+  token.c \
+  token2.c \
+  tokenizer.c \
 # mainfiles
 
 cleanerfiles = \

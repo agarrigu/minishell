@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/05 18:21:54 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:30:31 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "rules.h"
 #include "mstypes.h"
 #include "command.h"
+#include "expander.h"
 #include "env_util.h"
 #include "cleaners.h"
 #include "builtins.h"
@@ -94,8 +95,11 @@ static void	tf_loop(t_dlist **environ)
 		user_input = readline("$>");
 		if (!user_input)
 			break ;
-		if (*user_input)
-			(add_history(user_input), ft_tokenize(&tokens, user_input));
+		if (!*user_input && (free(user_input), 42))
+			continue ;
+		add_history(user_input);
+		ft_tokenize(&tokens, user_input);
+		ft_expand(&tokens, *environ);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
 		ft_dlstclear(&tokens, &ft_token_cleaner);

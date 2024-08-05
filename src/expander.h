@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   isses.h                                            :+:      :+:    :+:   */
+/*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 13:33:34 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/05 19:33:52 by algarrig         ###   ########.fr       */
+/*   Created: 2024/08/05 18:44:16 by algarrig          #+#    #+#             */
+/*   Updated: 2024/08/05 20:28:07 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ISSES_H
-# define ISSES_H
-# include <stdbool.h>
+#ifndef EXPANDER_H
+# define EXPANDER_H
+# include "../../libft/ft.h"
 
-int		ft_isopp(int c);
-int		ft_isname(int c);
-int		ft_islongopp(const char *s);
-bool	ft_is_opp_cand(int prev, int curr);
+void	ft_expand(t_dlist **tokens, t_dlist *environ);
 
-#endif /* !ISSES_H */
+#endif /* !EXPANDER_H */

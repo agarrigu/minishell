@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:34:47 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/28 19:42:43 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:31:57 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 int	ft_isopp(int c)
 {
 	return (c == '>' || c == '<' || c == '|');
+}
+
+int	ft_isname(int c)
+{
+	return (c == '_' || ft_isalnum(c));
 }
 
 int	ft_islongopp(const char *s)
