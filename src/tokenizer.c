@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:39:18 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/02 21:44:17 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:01:51 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,24 @@ static const char	*tf_quote_state(const char *s)
 	return (++s);
 }
 
+/**
+ * NOTE(algarrig): Not gonna lie, not doing the `s' safety check
+ *
+ *		if (!s || !*s)
+ *			return ;
+ *
+ * cos of Norminette TM, but its being done by the calling function `tf_loop()'
+ */
 void	ft_tokenize(t_dlist **tokens, const char *s)
 {
 	const char	*mark;
 
-	if (!s || !*s)
-		return ;
 	mark = s;
 	while (*s && mark)
 	{
-		if (mark != s && ft_islongopp(s - 1))
+		if (mark == s - 2 && ft_islongopp(s - 2))
+			mark = tf_categorize_token(tokens, mark, s - mark);
+		else if (mark != s && ft_islongopp(s - 1))
 			;
 		else if (mark != s && ft_isopp(s[-1]) && !ft_isopp(s[0]))
 			mark = tf_categorize_token(tokens, mark, s - mark);

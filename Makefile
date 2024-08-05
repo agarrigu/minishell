@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/28 18:59:16 by algarrig         ###   ########.fr        #
+#    Updated: 2024/08/05 18:23:22 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ $(LFTDIR)/$(DBLFT): $(LFTDIR)
 	$(MAKE) $(DBLFT) -C $(LFTDIR)
 
 clean:
+	$(RM) $(OBJ)
 	$(MAKE) clean -C $(LFTDIR)
 	
 fclean: clean
