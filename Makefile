@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/08/06 20:40:54 by algarrig         ###   ########.fr        #
+#    Updated: 2024/08/06 20:57:07 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ mainfiles = \
   env_util2.c \
   expander.c \
   expander_util.c \
-  helpers.c \
   heredoc.c \
   isses.c \
   minishell.c \
