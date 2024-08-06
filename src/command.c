@@ -6,11 +6,12 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/27 17:08:57 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:27:06 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
+#include "env_util.h"
 #include "mstypes.h"
 #include <unistd.h>
 #include "token.h"
@@ -69,7 +70,7 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 			cmd->filepath = find_command_path(environ, cmd);
 		else
 			check_command_path(cmd, environ);
-		execve (cmd->filepath, cmd->argv, NULL);
+		execve (cmd->filepath, cmd->argv, ft_kvprtov(*environ));
 		(ft_complete_cleaner(cmd, environ), exit(EXIT_FAILURE));
 	}
 	return (pid);

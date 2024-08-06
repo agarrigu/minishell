@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 19:44:37 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/24 17:19:23 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:33:41 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	tf_count_entries(t_dlist *lst)
 {
 	int	n;
 
+	n = 0;
 	while (lst)
 	{
 		++n;

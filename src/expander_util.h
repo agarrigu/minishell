@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.h                                         :+:      :+:    :+:   */
+/*   expander_util.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 18:44:16 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/06 19:41:04 by algarrig         ###   ########.fr       */
+/*   Created: 2024/08/06 20:36:02 by algarrig          #+#    #+#             */
+/*   Updated: 2024/08/06 20:39:45 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-# define EXPANDER_H
-# include "../../libft/ft.h"
+#ifndef EXPANDER_UTIL_H
+# define EXPANDER_UTIL_H
+# include "../libft/ft.h"
 
-void	ft_expand(t_dlist **tokens, t_dlist *environ);
+void	ft_actually_expand_name(char **buff, const char **word,
+			t_dlist *environ);
+char	*ft_actually_expand_name2(char *buff, t_dlist *environ);
 
-#endif /* !EXPANDER_H */
+#endif /* !EXPANDER_UTIL_H */
