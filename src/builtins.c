@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:01 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:53:07 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 23:01:33 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ bool	is_builtin(char *command)
 
 int	exec_parent_builtin(t_command *command, t_dlist **environ)
 {
-	int	fd;
+	int	stdin_fd;
+	int	stdout_fd;
 	int	ret;
 
-	fd = dup(STDOUT_FILENO);
+	stdin_fd = dup(STDIN_FILENO);
+	stdout_fd = dup(STDOUT_FILENO);
 	handle_redirections(command->tokens, command, environ);
 	command->argv = get_arguments(command->tokens);
 	ret = execute_builtin(*command, environ);
-	(dup2(fd, STDOUT_FILENO), close(fd));
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	dup2(stdin_fd, STDIN_FILENO);
+	dup2(stdout_fd, STDOUT_FILENO);
 	return (ret);
 }
 

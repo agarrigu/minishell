@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 20:29:06 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 22:59:11 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	ft_add_msls_to_env(environ, ret);
 	return (free(command.childs_pid), ret);
 }
-#include "helpers.h"
+
 static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
@@ -88,7 +88,6 @@ static void	tf_loop(t_dlist **environ)
 		ft_expand(&tokens, *environ);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
-		print_tokens(tokens);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
