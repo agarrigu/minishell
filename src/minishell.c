@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/06 19:40:55 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:11:25 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "heredoc.h"
 #include "rules.h"
 #include "mstypes.h"
 #include "command.h"
@@ -99,6 +100,7 @@ static void	tf_loop(t_dlist **environ)
 			continue ;
 		add_history(user_input);
 		ft_tokenize(&tokens, user_input);
+		ft_heredoc(&tokens, *environ);
 		ft_expand(&tokens, *environ);
 		if (ft_parse(tokens))
 			execer(tokens, environ);

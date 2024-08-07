@@ -6,28 +6,15 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:55:31 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/21 18:50:24 by bob              ###   ########.fr       */
+/*   Updated: 2024/08/07 18:09:55 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readline/readline.h"
 #include "../libft/ft.h"
-#include "cleaners.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include "token.h"
-
-static size_t	tf_mini_gettotlen(t_list *lst)
-{
-	size_t	len;
-
-	len = 0;
-	while (lst)
-	{
-		len += ft_strlen((char *) lst->data) + 1;
-		lst = lst->next;
-	}
-	return (len);
-}
 
 static char	*tf_mini_gnl(t_list *lst)
 {
@@ -35,8 +22,15 @@ static char	*tf_mini_gnl(t_list *lst)
 	char	*line;
 	char	*citera;
 	char	*citerb;
+	t_list	*liter;
 
-	len = tf_mini_gettotlen(lst);
+	len = 0;
+	liter = lst;
+	while (liter)
+	{
+		len += ft_strlen((char *) liter->data) + 1;
+		liter = liter->next;
+	}
 	line = malloc(len + 1);
 	line[len] = '\0';
 	citera = line;
@@ -51,9 +45,10 @@ static char	*tf_mini_gnl(t_list *lst)
 	return (line);
 }
 
-void	ft_do_heredoc(t_dlist **tokens, const char *delim)
+static const char	*tf_do_heredoc_and_free(const char *delim, const char *tf)
 {
 	char	*user_input;
+	char	*heredoc;
 	t_list	*heredoc_lst;
 
 	heredoc_lst = NULL;
@@ -64,7 +59,71 @@ void	ft_do_heredoc(t_dlist **tokens, const char *delim)
 			break ;
 		ft_lstadd_back(&heredoc_lst, ft_lstnew(user_input));
 	}
-	ft_dlstdellast(tokens, &ft_token_cleaner);
-	ft_addtkntolst(tokens, TKN_IO_HERE, tf_mini_gnl(heredoc_lst));
+	heredoc = tf_mini_gnl(heredoc_lst);
 	ft_lstclear(&heredoc_lst, &ft_clear_void);
+	free((void *)delim);
+	free((void *)tf);
+	delim = NULL;
+	tf = NULL;
+	return (heredoc);
+}
+
+static const char	*tf_remove_allquotes(const char *s)
+{
+	char	*iter;
+	char	*delim;
+	size_t	run;
+
+	delim = ft_calloc(ft_strlen(s) + 1, 1);
+	iter = delim;
+	while (*s)
+	{
+		if ((*s == '\'' || *s == '"') && ft_strchr(s + 1, *s))
+		{
+			run = ft_strchr(s + 1, *s) - s - 1;
+			ft_memcpy(iter, s + 1, run);
+			ft_memcpy(iter + run, s + run + 2, ft_strlen(iter));
+			s += run + 2;
+			iter += run;
+		}
+		else
+			*iter++ = *s++;
+	}
+	return (delim);
+}
+
+static const char	*tf_expand_and_free(const char *s)
+{
+	/* char	buff[2 * 1024 * 1024]; */
+
+	/* free((void *)s); */
+	/* return (ft_strdup(buff)); */
+	return (s);
+}
+
+void	ft_heredoc(t_dlist **tokens)
+{
+	t_dlist		*iter;
+	t_token		*token;
+	bool		expand;
+	const char	*delim;	
+
+	iter = *tokens;
+	expand = true;
+	while (iter)
+	{
+		token = (t_token *)iter->data;
+		if (token->type == TKN_WORD && iter->prev
+			&& ((t_token *)iter->prev->data)->type == TKN_OPP_DLESS)
+		{
+			if (ft_strchr(token->value, '"') || ft_strchr(token->value, '\''))
+				expand = false;
+			delim = tf_remove_allquotes(token->value);
+			token->type = TKN_IO_HERE;
+			token->value = tf_do_heredoc_and_free(delim, token->value);
+			if (expand)
+				token->value = tf_expand_and_free(token->value);
+		}
+		iter = iter->next;
+	}
 }

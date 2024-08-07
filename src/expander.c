@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 18:25:52 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/06 20:40:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:50:42 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,9 @@ static void	tf_expand_name(char *buff, const char *word, t_dlist *environ)
 
 	while (*word)
 	{
-		if (*word == '"' && ft_strchr(word + 1, '"'))
+		if ((*word == '"' || *word == '\'') && ft_strchr(word + 1, *word))
 		{
-			len = ft_strchr(word + 1, '"') + 1 - word;
-			ft_memcpy(buff, word, len);
-			word += len;
-			buff += len;
-		}
-		else if (*word == '\'' && ft_strchr(word + 1, '\''))
-		{
-			len = ft_strchr(word + 1, '\'') + 1 - word;
+			len = ft_strchr(word + 1, *word) + 1 - word;
 			ft_memcpy(buff, word, len);
 			word += len;
 			buff += len;
