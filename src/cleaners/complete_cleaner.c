@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_quote.c                                   :+:      :+:    :+:   */
+/*   complete_cleaner.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 18:15:10 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/26 19:14:14 by algarrig         ###   ########.fr       */
+/*   Created: 2024/07/25 18:10:14 by algarrig          #+#    #+#             */
+/*   Updated: 2024/07/25 18:14:01 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../cleaners.h"
 #include "../../libft/ft.h"
-#include "../isses.h"
 #include "../token.h"
 
-const char	*ft_tokenize_quote(t_dlist **tokens, const char *mark)
+void	ft_complete_cleaner(t_command *cmd, t_dlist **environ)
 {
-	const char	*iter;
+	t_dlist	*temp;
 
-	iter = ft_strchr(mark + 1, '\'');
-	if (iter)
-	{
-		++mark;
-		ft_addtkntolst(tokens, TKN_QWORD, ft_substr(mark, 0, iter - mark));
-		++iter;
-	}
-	else
-	{
-		iter = mark;
-		while (*iter && ft_isgraph(*iter) && !ft_isopp(*iter))
-			++iter;
-		ft_addtkntolst(tokens, TKN_WORD, ft_substr(mark, 0, iter - mark));
-	}
-	return (iter);
+	ft_command_cleaner(cmd);
+	temp = ft_get_first_token(cmd->tokens);
+	ft_dlstclear(&temp, ft_token_cleaner);
+	ft_dlstclear(environ, ft_kvpr_cleaner);
 }

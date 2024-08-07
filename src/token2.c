@@ -6,14 +6,13 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:47:57 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/02 18:54:50 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:35:34 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include <stdlib.h>
 #include "../libft/ft.h"
-#include "cleaners.h"
 
 t_token	*get_token(t_dlist *tokens)
 {

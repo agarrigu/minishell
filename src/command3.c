@@ -6,21 +6,16 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/23 18:52:44 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:06:47 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
-#include "mstypes.h"
 #include <unistd.h>
 #include "token.h"
 #include <stdlib.h>
-#include <stdio.h>
-#include "env_util.h"
-#include "builtins.h"
 #include <fcntl.h>
-#include <errno.h>
-#include <string.h>
+#include "cleaners.h"
 
 char	*get_command(t_dlist *tokens, t_dlist *environ)
 {
@@ -42,13 +37,19 @@ char	*get_command(t_dlist *tokens, t_dlist *environ)
 
 char	*get_argument_value(t_token *token, t_dlist *environ)
 {
+	char	*tmp;
+
 	if (get_type(token) == TKN_NAME
 		|| get_type(token) == TKN_ECMD)
 		return (get_name_value(get_value(token), environ));
 	else if (get_type(token) == TKN_DQWORD)
 	{
 		if (is_expandable(get_value(token)))
+		{
+			tmp = (char *) token->value;
 			return (expand_dqword(get_value(token), environ));
+			free(tmp);
+		}
 		else
 			return (ft_strdup(get_value(token)));
 	}
@@ -58,21 +59,29 @@ char	*get_argument_value(t_token *token, t_dlist *environ)
 		return (ft_strdup(get_value(token)));
 }
 
-void	handle_redirections(t_dlist *tokens)
+void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ)
 {
+	int	ret;
+
+	ret = 0;
 	while (tokens)
 	{
 		if (get_type(get_token(tokens)) == TKN_OPP_LESS)
-			infile_redirection(get_token(tokens));
+			ret = infile_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_GREAT)
-			outfile_redirection(get_token(tokens));
+			ret = outfile_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_DGREAT)
-			outfile_appended_redirection(get_token(tokens));
+			ret = outfile_appended_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_IO_HERE)
-			heredoc_redirection(get_token(tokens));
+			ret = heredoc_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;
 		tokens = tokens->next;
+	}
+	if (ret != 0)
+	{
+		ft_complete_cleaner(cmd, environ);
+		exit(ret);
 	}
 }
 
@@ -94,7 +103,6 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	char	*dollar;
 	char	*expanded;
 	char	*name;
-	char	*aux;
 
 	dollar = ft_strchr(dqword, '$');
 	expanded = malloc (sizeof(expanded) * (dollar - dqword + 1));
@@ -102,20 +110,19 @@ char	*expand_dqword(const char *dqword, t_dlist *environ)
 	dqword = get_end_name(dollar + 1);
 	if (dqword)
 	{
-		name = malloc(sizeof(expanded) * (dqword - dollar + 2));
+		name = malloc(sizeof(expanded) * (dqword - dollar));
 		ft_strlcpy(name, dollar + 1, (dqword - dollar));
-		aux = expanded;
-		expanded = ft_strjoin(expanded, get_name_value(name, environ));
-		free(aux);
+		expanded = ft_strjoin_freeb(expanded, get_name_value(name, environ));
 		if (is_expandable(dqword))
-			dqword = expand_dqword(dqword, environ);
-		expanded = ft_strjoin(expanded, dqword);
+			expanded = ft_strjoin_freeb(expanded,
+					expand_dqword(dqword, environ));
+		else
+			expanded = ft_strjoin_freel(expanded, dqword);
 	}
 	else
 	{
-		name = strdup(dollar + 1);
-		expanded = ft_strjoin(expanded, get_name_value(name, environ));
+		name = ft_strdup(dollar + 1);
+		expanded = ft_strjoin_freeb(expanded, get_name_value(name, environ));
 	}
-	free(name);
-	return (expanded);
+	return (free(name), expanded);
 }

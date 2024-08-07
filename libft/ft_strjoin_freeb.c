@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_error.h                                         :+:      :+:    :+:   */
+/*   ft_strjoin_freeb.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/23 18:06:11 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:34:10 by algarrig         ###   ########.fr       */
+/*   Created: 2024/07/25 20:00:22 by algarrig          #+#    #+#             */
+/*   Updated: 2024/07/27 19:32:47 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_ERROR_H
-# define MS_ERROR_H
-# include <sys/wait.h>
-# define MS_ERR_OK 4200
-# define MS_ERR_HEREDOC_INVDELIM 4201
+#include <stdlib.h>
+#include "ft.h"
 
-void	handle_error(int ms_errno);
+char	*ft_strjoin_freeb(char const *left, char const *right)
+{
+	char	*join;
 
-#endif /* MS_ERROR_H */
+	join = ft_strjoin(left, right);
+	free((char *) left);
+	free((char *) right);
+	return (join);
+}

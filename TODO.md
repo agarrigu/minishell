@@ -6,10 +6,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: algarrig <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/21 11:24:19 by algarrig          #+#    #+#              #
-#    Updated: 2024/03/21 11:24:19 by algarrig         ###   ########.fr        #
+#    Created: 2024/07/28 16:00:31 by algarrig          #+#    #+#              #
+#    Updated: 2024/07/28 16:00:31 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 ```
 
 # PROJECT WIDE TODOs
@@ -26,7 +27,7 @@
 - [x] Implement `<`, `>`, `<<`, `>>`
 - [x] Implement pipes
 - [x] Handle enviroment vars
-- [ ] Handle $?
+- [x] Handle $?
 - [x] Handle C-C C-D C-\
 - [x] Implement builtins (no opts unless stated otherwise):
   - [x] echo (with opt -n)

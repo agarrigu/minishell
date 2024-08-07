@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:47:57 by algarrig          #+#    #+#             */
-/*   Updated: 2024/06/29 16:29:17 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:14:55 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void	delete_node(t_dlist *tokens)
 		(tokens->next)->prev = tokens->prev;
 	ft_token_cleaner(get_token(tokens));
 	free(tokens);
+}
+
+t_dlist	*ft_get_first_token(t_dlist *dlst)
+{
+	while (dlst->prev)
+		dlst = dlst->prev;
+	return (dlst);
 }

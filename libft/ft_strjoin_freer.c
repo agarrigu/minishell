@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin_freer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
+/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 20:06:37 by bob               #+#    #+#             */
-/*   Updated: 2024/07/28 19:21:15 by algarrig         ###   ########.fr       */
+/*   Created: 2024/07/25 20:00:22 by algarrig          #+#    #+#             */
+/*   Updated: 2024/07/28 18:50:59 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
-# include "../libft/ft.h"
+#include <stdlib.h>
+#include "ft.h"
 
-void	ft_tokenize(t_dlist **tokens, const char *user_input);
+char	*ft_strjoin_freer(char const *left, char const *right)
+{
+	char	*join;
 
-#endif /* !TOKENIZER_H */
+	join = ft_strjoin(left, right);
+	free((char *) right);
+	return (join);
+}

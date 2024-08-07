@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   expander_util.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bob </var/mail/bob>                        +#+  +:+       +#+        */
+/*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 20:06:37 by bob               #+#    #+#             */
-/*   Updated: 2024/07/28 19:21:15 by algarrig         ###   ########.fr       */
+/*   Created: 2024/08/06 20:36:02 by algarrig          #+#    #+#             */
+/*   Updated: 2024/08/06 20:39:45 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#ifndef EXPANDER_UTIL_H
+# define EXPANDER_UTIL_H
 # include "../libft/ft.h"
 
-void	ft_tokenize(t_dlist **tokens, const char *user_input);
+void	ft_actually_expand_name(char **buff, const char **word,
+			t_dlist *environ);
+char	*ft_actually_expand_name2(char *buff, t_dlist *environ);
 
-#endif /* !TOKENIZER_H */
+#endif /* !EXPANDER_UTIL_H */

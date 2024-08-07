@@ -21,8 +21,8 @@ fts		= \
   ft_dlstadd_cond \
   ft_dlstadd_front \
   ft_dlstclear \
-  ft_dlstdelone \
   ft_dlstdellast \
+  ft_dlstdelone \
   ft_dlstiter \
   ft_dlstlast \
   ft_dlstmap \
@@ -71,12 +71,16 @@ fts		= \
   ft_stris \
   ft_striteri \
   ft_strjoin \
+  ft_strjoin_freeb \
+  ft_strjoin_freel \
+  ft_strjoin_freer \
   ft_strlcat \
   ft_strlcpy \
   ft_strlen \
   ft_strmapi \
   ft_strncmp \
   ft_strnstr \
+  ft_strndup \
   ft_strrchr \
   ft_strtrim \
   ft_substr \

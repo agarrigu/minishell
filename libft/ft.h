@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:45:02 by algarrig          #+#    #+#             */
-/*   Updated: 2024/05/13 20:22:26 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:44:20 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ char		*ft_strchrnul(const char *s, int c);
 char		*ft_strcpy(char *dst, const char *src);
 char		*ft_strdup(const char *s);
 char		*ft_strjoin(const char *left, const char *right);
+char		*ft_strjoin_freeb(char const *left, char const *right);
+char		*ft_strjoin_freel(char const *left, char const *right);
+char		*ft_strjoin_freer(char const *left, char const *right);
+char		*ft_strndup(const char *s, size_t n);
 char		*ft_strnstr(const char *hay, const char *ndl, size_t len);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strtrim(const char *str, const char *set);

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   isses.h                                            :+:      :+:    :+:   */
+/*   command_cleaner.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 13:33:34 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/05 19:33:52 by algarrig         ###   ########.fr       */
+/*   Created: 2024/07/24 18:20:52 by algarrig          #+#    #+#             */
+/*   Updated: 2024/07/25 17:47:35 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ISSES_H
-# define ISSES_H
-# include <stdbool.h>
+#include "../../libft/ft.h"
+#include "../command.h"
+#include <stdlib.h>
 
-int		ft_isopp(int c);
-int		ft_isname(int c);
-int		ft_islongopp(const char *s);
-bool	ft_is_opp_cand(int prev, int curr);
-
-#endif /* !ISSES_H */
+void	ft_command_cleaner(t_command *command)
+{
+	free(command->childs_pid);
+	ft_freesplit(command->argv);
+	free(command->filepath);
+	command->childs_pid = NULL;
+	command->argv = NULL;
+	command->filepath = NULL;
+}

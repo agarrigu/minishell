@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:10:03 by algarrig          #+#    #+#             */
-/*   Updated: 2024/07/23 20:51:50 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:45:03 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,6 @@ static void	tf_change_val(t_kvpr *old, t_kvpr *nu)
 	nu = NULL;
 }
 
-static void	tf_insertkvpr(t_dlist **environ, t_dlist *lst, t_kvpr *nukvpr)
-{
-	t_dlist	*nulst;
-
-	nulst = ft_dlstnew(nukvpr);
-	nulst->prev = lst->prev;
-	nulst->next = lst;
-	if (!lst->prev)
-		*environ = nulst;
-	else
-	{
-		lst->prev->next = nulst;
-		lst->prev = nulst;
-	}
-}
-
 static void	tf_do_the_thing(t_dlist **environ, t_kvpr *new_kvpr)
 {
 	t_kvpr	*tmp_kvpr;
@@ -55,8 +39,6 @@ static void	tf_do_the_thing(t_dlist **environ, t_kvpr *new_kvpr)
 		tmp_kvpr = (t_kvpr *) iter->data;
 		if (ft_strcmp(new_kvpr->key, tmp_kvpr->key) == 0)
 			return ((void) tf_change_val(tmp_kvpr, new_kvpr));
-		if (ft_strcmp(new_kvpr->key, tmp_kvpr->key) < 0)
-			return ((void) tf_insertkvpr(environ, iter, new_kvpr));
 		iter = iter->next;
 	}
 	if (!iter)
@@ -70,9 +52,9 @@ static bool	is_valid_key(const char *str)
 		return (true);
 	else
 	{
-		ft_putstr_fd("Error: export ", 2);
+		ft_putstr_fd("export ", 2);
 		ft_putstr_fd((char *) str, 2);
-		ft_putstr_fd(": not a valid identifier", 2);
+		ft_putstr_fd(": Not a valid identifier", 2);
 		ft_putchar_fd('\n', 2);
 		return (false);
 	}
@@ -89,9 +71,9 @@ int	ft_export(char *argv[], t_dlist **environ)
 	while (*argv)
 	{
 		if (**argv == '=')
-			key = *argv;
-		else
-			key = ft_parse_key(*argv);
+			return (ft_putstr_fd("export: Not a valid identifier\n", 2),
+				EINVAL);
+		key = ft_parse_key(*argv);
 		if (is_valid_key(key))
 		{
 			new_kvpr = malloc(sizeof(*new_kvpr));
@@ -100,7 +82,7 @@ int	ft_export(char *argv[], t_dlist **environ)
 			tf_do_the_thing(environ, new_kvpr);
 		}
 		else
-			return (ft_putstr_fd("export: ", 2), EINVAL);
+			return (free((char *) key), EINVAL);
 		++argv;
 	}
 	return (0);

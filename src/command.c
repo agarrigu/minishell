@@ -6,26 +6,30 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/24 17:43:10 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:13:24 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
+#include "env_util.h"
 #include "mstypes.h"
 #include <unistd.h>
 #include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "builtins.h"
+#include "cleaners.h"
+#include "signal_util.h"
 
 void	init_command(t_command *cmd, t_dlist *tokens)
 {
+	cmd->argv = NULL;
+	cmd->filepath = NULL;
 	cmd->tokens = tokens;
 	cmd->position = 0;
 	cmd->inpipe = 0;
 	cmd->outpipe[WRITE_END] = 0;
-	cmd->argv = NULL;
-	cmd->filepath = NULL;
+	cmd->childs_pid = NULL;
 }
 
 int	get_num_commands(t_dlist *tokens)
@@ -48,27 +52,26 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 {
 	pid_t	pid;
 
+	ft_ignore_sigint();
 	pid = fork();
 	if (pid == 0)
 	{
 		if (cmd->inpipe)
 			(dup2(cmd->inpipe, STDIN_FILENO), close(cmd->inpipe));
 		if (cmd->outpipe[WRITE_END])
-		{
-			dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO);
-			(close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
-		}
-		handle_redirections(cmd->tokens);
+			(dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO),
+				close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
+		handle_redirections(cmd->tokens, cmd, environ);
 		cmd->argv = get_arguments(cmd->tokens, *environ);
 		if (is_builtin(cmd->argv[0]))
-			exit (execute_builtin(*cmd, environ));
+			execute_child_builtin(*cmd, environ);
 		cmd->filepath = ft_strdup(cmd->argv[0]);
 		if (cmd->filepath[0] != '/' && cmd->filepath[0] != '.')
-			cmd->filepath = find_command_path(*environ, cmd->filepath);
+			cmd->filepath = find_command_path(environ, cmd);
 		else
-			check_command_path(cmd->filepath);
-		execve (cmd->filepath, cmd->argv, NULL);
-		exit (0);
+			check_command_path(cmd, environ);
+		execve (cmd->filepath, cmd->argv, ft_kvprtov(*environ));
+		(ft_complete_cleaner(cmd, environ), exit(EXIT_FAILURE));
 	}
 	return (pid);
 }

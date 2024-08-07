@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:01 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/23 20:26:33 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:19:28 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute_builtin(t_command command, t_dlist **environ)
 	else if (ft_strcmp(command.argv[0], "env") == 0)
 		return (ft_env(command.argv, environ));
 	else
-		return (ft_exit(command.argv, environ));
+		return (ft_exit(command.argv, environ, &command));
 }
 
 int	exec_parent_builtin(t_command *command, t_dlist **environ)
@@ -50,7 +50,7 @@ int	exec_parent_builtin(t_command *command, t_dlist **environ)
 	int	ret;
 
 	fd = dup(STDOUT_FILENO);
-	handle_redirections(command->tokens);
+	handle_redirections(command->tokens, command, environ);
 	command->argv = get_arguments(command->tokens, *environ);
 	ret = execute_builtin(*command, environ);
 	(dup2(fd, STDOUT_FILENO), close(fd));

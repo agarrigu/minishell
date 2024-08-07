@@ -6,7 +6,7 @@
 #    By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:02:43 by algarrig          #+#    #+#              #
-#    Updated: 2024/07/23 18:43:55 by algarrig         ###   ########.fr        #
+#    Updated: 2024/08/06 20:57:07 by algarrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,42 +22,33 @@ LDLIB	= -lft -lreadline -L$(LFTDIR)
 MAKE 	= make --no-print-directory
 
 mainfiles = \
-  env_util.c \
-  env_util2.c \
-  env_util2.c \
-  heredoc.c \
-  isses.c \
-  minishell.c \
-  ms_error.c \
-  signal_util.c \
-  token.c \
-  token2.c \
-  tokenizer.c \
-  rules.c \
-  rules2.c \
+  builtins.c \
   command.c \
   command2.c \
   command3.c \
   command4.c \
   command5.c \
-  builtins.c \
-  helpers.c \
+  env_util.c \
+  env_util2.c \
+  expander.c \
+  expander_util.c \
+  heredoc.c \
+  isses.c \
+  minishell.c \
+  rules.c \
+  rules2.c \
+  signal_util.c \
+  token.c \
+  token2.c \
+  tokenizer.c \
 # mainfiles
 
 cleanerfiles = \
   kvpr_cleaner.c \
   token_cleaner.c \
+  command_cleaner.c \
+  complete_cleaner.c \
 # cleanerfiles
-
-tokenizerfiles = \
-  tokenize_dollar.c \
-  tokenize_dquote.c \
-  tokenize_io_here.c \
-  tokenize_opperator.c \
-  tokenize_quote.c \
-  tokenize_word.c \
-  tokenize_ass.c \
-# tokenizers
 
 builtinfiles = \
   cd.c \
@@ -100,6 +91,7 @@ $(LFTDIR)/$(DBLFT): $(LFTDIR)
 	$(MAKE) $(DBLFT) -C $(LFTDIR)
 
 clean:
+	$(RM) $(OBJ)
 	$(MAKE) clean -C $(LFTDIR)
 	
 fclean: clean
