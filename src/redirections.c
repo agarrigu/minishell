@@ -1,28 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command4.c                                         :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/27 16:36:19 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:47:42 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command.h"
-#include "mstypes.h"
+
 #include <unistd.h>
-#include "token.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include "mstypes.h"
+#include "token.h"
+#include "redirections.h"
+#include "command.h"
+#include "cleaners.h"
 
-/* NOTE: ft_putend_fl is giving linking problems!!!
-   so I had to print \n (so far)
-*/
+
+void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ)
+{
+	int	ret;
+
+	ret = 0;
+	while (tokens)
+	{
+		if (get_type(get_token(tokens)) == TKN_OPP_LESS)
+			ret = infile_redirection(get_token(tokens));
+		if (get_type(get_token(tokens)) == TKN_OPP_GREAT)
+			ret = outfile_redirection(get_token(tokens));
+		if (get_type(get_token(tokens)) == TKN_OPP_DGREAT)
+			ret = outfile_appended_redirection(get_token(tokens));
+		if (get_type(get_token(tokens)) == TKN_IO_HERE)
+			ret = heredoc_redirection(get_token(tokens));
+		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
+			break ;
+		tokens = tokens->next;
+	}
+	if (ret != 0)
+	{
+		ft_complete_cleaner(cmd, environ);
+		exit(ret);
+	}
+}
+
 int	infile_redirection(t_token *token)
 {
 	int			fd;
@@ -96,8 +123,3 @@ int	heredoc_redirection(t_token *token)
 	return (0);
 }
 
-void	expand_command(t_token *token, t_dlist *environ)
-{
-	set_type(token, TKN_CMD);
-	set_value(token, get_name_value(get_value(token), environ));
-}

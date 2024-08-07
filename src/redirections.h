@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   redirections.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:43:58 by srodrigo         ###   ########.fr       */
+/*   Created: 2024/08/07 17:27:17 by srodrigo          #+#    #+#             */
+/*   Updated: 2024/08/07 17:37:04 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
-# include <sys/wait.h>
+#ifndef REDIRECTIONS_H
+# define REDIRECTIONS_H
+# include "command.h"
 # include "../libft/ft.h"
+# include "token.h"
 
-typedef struct s_command
-{
-	t_dlist	*tokens;
-	int		position;
-	int		inpipe;
-	int		outpipe[2];
-	char	**argv;
-	char	*filepath;
-	pid_t	*childs_pid;
-}	t_command;
+void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ);
+int		heredoc_redirection(t_token *token);
+int		infile_redirection(t_token *token);
+int		outfile_appended_redirection(t_token *token);
+int		outfile_redirection(t_token *token);
 
-pid_t	execute_command(t_command *command, t_dlist **environ);
-t_dlist	*get_next_command(t_dlist *tokens);
-
-#endif /* !COMMAND_H */
+#endif /* !REDIRECTIONS_H */

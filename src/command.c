@@ -6,48 +6,27 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/06 20:27:06 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:52:54 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command.h"
-#include "env_util.h"
-#include "mstypes.h"
-#include <unistd.h>
-#include "token.h"
+#include <errno.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include "../libft/ft.h"
+#include "mstypes.h"
+#include "env_util.h"
+#include "token.h"
+#include "command.h"
+#include "command_name.h"
+#include "redirections.h"
+#include "arguments.h"
 #include "builtins.h"
-#include "cleaners.h"
 #include "signal_util.h"
+#include "cleaners.h"
 
-void	init_command(t_command *cmd, t_dlist *tokens)
-{
-	cmd->argv = NULL;
-	cmd->filepath = NULL;
-	cmd->tokens = tokens;
-	cmd->position = 0;
-	cmd->inpipe = 0;
-	cmd->outpipe[WRITE_END] = 0;
-	cmd->childs_pid = NULL;
-}
-
-int	get_num_commands(t_dlist *tokens)
-{
-	int			ncmd;
-
-	ncmd = 0;
-	while (tokens)
-	{
-		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
-			ncmd++;
-		tokens = tokens->next;
-	}
-	return (ncmd + 1);
-}
-
-/* NOTE: If EXECVE fails it has to exit() whith the proper error
-   and I guess there has to be some malloc'd cleaning */
 pid_t	execute_command(t_command *cmd, t_dlist **environ)
 {
 	pid_t	pid;
@@ -62,7 +41,7 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 			(dup2(cmd->outpipe[WRITE_END], STDOUT_FILENO),
 				close(cmd->outpipe[READ_END]), close(cmd->outpipe[WRITE_END]));
 		handle_redirections(cmd->tokens, cmd, environ);
-		cmd->argv = get_arguments(cmd->tokens, *environ);
+		cmd->argv = get_arguments(cmd->tokens);
 		if (is_builtin(cmd->argv[0]))
 			execute_child_builtin(*cmd, environ);
 		cmd->filepath = ft_strdup(cmd->argv[0]);
@@ -76,51 +55,28 @@ pid_t	execute_command(t_command *cmd, t_dlist **environ)
 	return (pid);
 }
 
-char	**get_arguments(t_dlist *tokens, t_dlist *environ)
+t_dlist	*get_next_command(t_dlist *tokens)
 {
-	int		narg;
-	char	**argv;
-
-	narg = get_num_arguments(tokens) + 1;
-	argv = malloc (sizeof(*argv) * (narg + 1));
-	argv[narg] = NULL;
-	narg = 0;
 	while (tokens)
 	{
-		if (get_type(get_token(tokens)) == TKN_CMD
-			|| get_type(get_token(tokens)) == TKN_ECMD
-			|| get_type(get_token(tokens)) == TKN_ARG
-			|| get_type(get_token(tokens)) == TKN_QWORD
-			|| get_type(get_token(tokens)) == TKN_NAME
-			|| get_type(get_token(tokens)) == TKN_DQWORD
-			|| get_type(get_token(tokens)) == TKN_ASSWORD)
-		{
-			argv[narg] = get_argument_value(get_token(tokens), environ);
-			narg++;
-		}
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
-			break ;
+			return (tokens->next);
 		tokens = tokens->next;
 	}
-	return (argv);
+	return (tokens);
 }
 
-int	get_num_arguments(t_dlist *tokens)
+void	check_command_path(t_command *cmd, t_dlist **environ)
 {
-	int	narg;
-
-	narg = 0;
-	while (tokens)
+	if (access(cmd->filepath, F_OK) != 0)
 	{
-		if (get_type(get_token(tokens)) == TKN_ARG
-			|| get_type(get_token(tokens)) == TKN_DQWORD
-			|| get_type(get_token(tokens)) == TKN_QWORD
-			|| get_type(get_token(tokens)) == TKN_NAME
-			|| get_type(get_token(tokens)) == TKN_ASSWORD)
-			narg++;
-		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
-			break ;
-		tokens = tokens->next;
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd((char *) cmd->filepath, 2);
+		ft_putchar_fd('\n', 2);
+		ft_complete_cleaner(cmd, environ);
+		exit(errno);
 	}
-	return (narg);
+	return ;
 }

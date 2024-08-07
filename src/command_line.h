@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   command_line.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 12:55:00 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:43:58 by srodrigo         ###   ########.fr       */
+/*   Created: 2024/08/07 18:05:11 by srodrigo          #+#    #+#             */
+/*   Updated: 2024/08/07 19:16:52 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#ifndef COMMAND_LINE_H
+# define COMMAND_LINE_H
 # include <sys/wait.h>
 # include "../libft/ft.h"
+# include "command.h"
 
-typedef struct s_command
-{
-	t_dlist	*tokens;
-	int		position;
-	int		inpipe;
-	int		outpipe[2];
-	char	**argv;
-	char	*filepath;
-	pid_t	*childs_pid;
-}	t_command;
+void	init_command(t_command *command, t_dlist *tokens);
+int		get_num_commands(t_dlist *tokens);
+void	pipes_and_execute(int commands, t_command *command, t_dlist **environ);
+void	close_if_fd(int fd);
 
-pid_t	execute_command(t_command *command, t_dlist **environ);
-t_dlist	*get_next_command(t_dlist *tokens);
 
-#endif /* !COMMAND_H */
+#endif /* !COMMAND_LINE_H */
