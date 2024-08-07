@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 18:25:52 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 17:50:42 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:38:51 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	ft_expand(t_dlist **tokens, t_dlist *environ)
 			tf_expand_name(buff, token->value, environ);
 			tf_wordsplit(buff, &new, environ);
 		}
+		else if (token->type == TKN_IO_HERE)
+			ft_addtkntolst(&new, token->type, ft_strdup(token->value));
 		else
 			ft_addtkntolst(&new, token->type, NULL);
 		iter = iter->next;

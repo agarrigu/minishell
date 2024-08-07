@@ -6,14 +6,15 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:55:31 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 18:09:55 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:34:30 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline/readline.h"
-#include "../libft/ft.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include "readline/readline.h"
+#include "expander_util.h"
+#include "../libft/ft.h"
 #include "token.h"
 
 static char	*tf_mini_gnl(t_list *lst)
@@ -61,7 +62,6 @@ static const char	*tf_do_heredoc_and_free(const char *delim, const char *tf)
 	}
 	heredoc = tf_mini_gnl(heredoc_lst);
 	ft_lstclear(&heredoc_lst, &ft_clear_void);
-	free((void *)delim);
 	free((void *)tf);
 	delim = NULL;
 	tf = NULL;
@@ -92,16 +92,27 @@ static const char	*tf_remove_allquotes(const char *s)
 	return (delim);
 }
 
-static const char	*tf_expand_and_free(const char *s)
+static const char	*tf_expand_and_free(const char *s, t_dlist *environ)
 {
-	/* char	buff[2 * 1024 * 1024]; */
+	char		buff[2 * 1024 * 1024];
+	char		*biter;
+	const char	*siter;
 
-	/* free((void *)s); */
-	/* return (ft_strdup(buff)); */
-	return (s);
+	ft_bzero(buff, sizeof(buff));
+	siter = s;
+	biter = buff;
+	while (*siter)
+	{
+		if (*siter == '$')
+			ft_actually_expand_name(&biter, &siter, environ);
+		else
+			*biter++ = *siter++;
+	}
+	free((void *)s);
+	return (ft_strdup(buff));
 }
 
-void	ft_heredoc(t_dlist **tokens)
+void	ft_heredoc(t_dlist **tokens, t_dlist *environ)
 {
 	t_dlist		*iter;
 	t_token		*token;
@@ -121,8 +132,9 @@ void	ft_heredoc(t_dlist **tokens)
 			delim = tf_remove_allquotes(token->value);
 			token->type = TKN_IO_HERE;
 			token->value = tf_do_heredoc_and_free(delim, token->value);
+			free((void *)delim);
 			if (expand)
-				token->value = tf_expand_and_free(token->value);
+				token->value = tf_expand_and_free(token->value, environ);
 		}
 		iter = iter->next;
 	}
