@@ -6,13 +6,28 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:47:35 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 17:11:15 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/08 00:05:29 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rules.h"
 #include "cleaners.h"
 #include <stdlib.h>
+
+bool	is_command_name(t_dlist **tokens)
+{
+	t_token	*token;
+
+	token = (*tokens)->data;
+	if (get_type(token) == TKN_WORD)
+	{
+		set_type(token, TKN_CMD);
+		*tokens = (*tokens)->next;
+		return (true);
+	}
+	else
+		return (false);
+}
 
 bool	is_args_list(t_dlist **tokens)
 {

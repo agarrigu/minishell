@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:52:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 20:25:20 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/08 00:05:18 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 	io_redir ->				TKN_OPP_LESS TKN_WORD
 							| TKN_OPP_DLESS TKN_IO_HERE
-							| TKN_OPP_GREAT WORD TKN_WORD
-							| TKN_OPP_DGREAT WORD TKN_WORD
+							| TKN_OPP_GREAT TKN_WORD
+							| TKN_OPP_DGREAT TKN_WORD
 
 	command_name ->			TKN_WORD
 
@@ -96,33 +96,19 @@ bool	is_io_redir_list(t_dlist **tokens)
 
 bool	is_io_redir(t_dlist **tokens)
 {
-	t_token	*token;
+	t_token		*token;
+	t_typtok	aux_type;
 
 	token = get_token(*tokens);
-	if (get_type(token) == TKN_OPP_LESS || get_type(token) == TKN_OPP_GREAT
-		|| get_type(token) == TKN_OPP_DGREAT)
+	aux_type = get_type(token);
+	if (is_redir_operation(aux_type))
 	{
 		*tokens = (*tokens)->next;
 		if (*tokens == NULL)
 			return (false);
 		token = get_token(*tokens);
-		if (get_type(token) == TKN_WORD)
-		{
-			set_value(get_token((*tokens)->prev), get_value(token));
-			*tokens = (*tokens)->prev;
-			delete_node((*tokens)->next);
-			*tokens = (*tokens)->next;
-		}
-		else
-			return (false);
-	}
-	else if (get_type(token) == TKN_OPP_DLESS)
-	{
-		*tokens = (*tokens)->next;
-		if (*tokens == NULL)
-			return (false);
-		token = get_token(*tokens);
-		if (get_type(token) == TKN_IO_HERE)
+		if ((get_type(token) == TKN_WORD && aux_type != TKN_OPP_DLESS)
+			|| (get_type(token) == TKN_IO_HERE && aux_type == TKN_OPP_DLESS))
 		{
 			set_value(get_token((*tokens)->prev), get_value(token));
 			*tokens = (*tokens)->prev;
@@ -137,17 +123,10 @@ bool	is_io_redir(t_dlist **tokens)
 	return (true);
 }
 
-bool	is_command_name(t_dlist **tokens)
+bool	is_redir_operation(t_typtok tiktoker)
 {
-	t_token	*token;
-
-	token = (*tokens)->data;
-	if (get_type(token) == TKN_WORD)
-	{
-		set_type(token, TKN_CMD);
-		*tokens = (*tokens)->next;
-		return (true);
-	}
-	else
-		return (false);
+	return (tiktoker == TKN_OPP_LESS
+		|| tiktoker == TKN_OPP_GREAT
+		|| tiktoker == TKN_OPP_DGREAT
+		|| tiktoker == TKN_OPP_DLESS);
 }
