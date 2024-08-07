@@ -6,12 +6,17 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:01 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 21:19:28 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:53:07 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include <stdbool.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include "builtins.h"
+#include "redirections.h"
+#include "arguments.h"
+#include "cleaners.h"
 
 bool	is_builtin(char *command)
 {
@@ -24,6 +29,19 @@ bool	is_builtin(char *command)
 		|| ft_strcmp(command, "exit") == 0)
 		return (true);
 	return (false);
+}
+
+int	exec_parent_builtin(t_command *command, t_dlist **environ)
+{
+	int	fd;
+	int	ret;
+
+	fd = dup(STDOUT_FILENO);
+	handle_redirections(command->tokens, command, environ);
+	command->argv = get_arguments(command->tokens);
+	ret = execute_builtin(*command, environ);
+	(dup2(fd, STDOUT_FILENO), close(fd));
+	return (ret);
 }
 
 int	execute_builtin(t_command command, t_dlist **environ)
@@ -44,15 +62,11 @@ int	execute_builtin(t_command command, t_dlist **environ)
 		return (ft_exit(command.argv, environ, &command));
 }
 
-int	exec_parent_builtin(t_command *command, t_dlist **environ)
+void	execute_child_builtin(t_command command, t_dlist **environ)
 {
-	int	fd;
-	int	ret;
+	int		ret;
 
-	fd = dup(STDOUT_FILENO);
-	handle_redirections(command->tokens, command, environ);
-	command->argv = get_arguments(command->tokens, *environ);
-	ret = execute_builtin(*command, environ);
-	(dup2(fd, STDOUT_FILENO), close(fd));
-	return (ret);
+	ret = execute_builtin(command, environ);
+	ft_complete_cleaner(&command, environ);
+	exit(ret);
 }

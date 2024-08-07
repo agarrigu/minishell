@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command2.c                                         :+:      :+:    :+:   */
+/*   command_name.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 13:22:16 by srodrigo         ###   ########.fr       */
+/*   Created: 2024/08/07 18:09:46 by srodrigo          #+#    #+#             */
+/*   Updated: 2024/08/07 19:58:40 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command.h"
-#include <unistd.h>
-#include "token.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
+#include "../libft/ft.h"
 #include "env_util.h"
+#include "token.h"
+#include "command.h"
+#include "command_name.h"
 #include "cleaners.h"
 
-/* NOTE: linking problems with ft_putend_fd (as previously)
-   We have to exit with the proper code
-*/
+
+char	*get_command(t_dlist *tokens)
+{
+	t_token		*token;
+	t_typtok	token_type;
+
+	token = get_token(tokens); // refactorize!!!!
+	token_type = get_type(token);
+	while (token_type != TKN_CMD)
+	{
+		tokens = tokens->next;
+		token = get_token(tokens);
+		token_type = get_type(token);
+	}
+	return ((char *)get_value(get_token(tokens)));
+}
+
 char	*find_command_path(t_dlist **environ, t_command *cmd)
 {
 	char	**paths;
@@ -67,30 +82,3 @@ char	**get_env_paths(t_dlist *environ)
 	return (NULL);
 }
 
-void	close_if_fd(int fd)
-{
-	if (fd)
-		close(fd);
-}
-
-t_dlist	*get_next_command(t_dlist *tokens)
-{
-	while (tokens)
-	{
-		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
-			return (tokens->next);
-		tokens = tokens->next;
-	}
-	return (tokens);
-}
-
-char	*get_name_value(const char *name, t_dlist *environ)
-{
-	while (environ)
-	{
-		if (ft_strcmp(get_kvpr_key(get_kvpr(environ)), name) == 0)
-			return (ft_strdup(get_kvpr_value(get_kvpr(environ))));
-		environ = environ->next;
-	}
-	return (ft_strdup(""));
-}
