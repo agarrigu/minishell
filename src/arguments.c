@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:51:14 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:52:07 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:17:21 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ int	get_num_arguments(t_dlist *tokens)
 	}
 	return (narg);
 }
-

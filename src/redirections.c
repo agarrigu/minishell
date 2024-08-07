@@ -6,10 +6,9 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:47:42 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:24:21 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -22,7 +21,6 @@
 #include "redirections.h"
 #include "command.h"
 #include "cleaners.h"
-
 
 void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ)
 {
@@ -37,7 +35,7 @@ void	handle_redirections(t_dlist *tokens, t_command *cmd, t_dlist **environ)
 			ret = outfile_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_DGREAT)
 			ret = outfile_appended_redirection(get_token(tokens));
-		if (get_type(get_token(tokens)) == TKN_IO_HERE)
+		if (get_type(get_token(tokens)) == TKN_OPP_DLESS)
 			ret = heredoc_redirection(get_token(tokens));
 		if (get_type(get_token(tokens)) == TKN_OPP_VLINE)
 			break ;
@@ -122,4 +120,3 @@ int	heredoc_redirection(t_token *token)
 	close(hdpipe[READ_END]);
 	return (0);
 }
-

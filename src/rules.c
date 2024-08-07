@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:52:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 17:10:51 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:25:20 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,22 @@ bool	is_io_redir(t_dlist **tokens)
 		else
 			return (false);
 	}
-	else if (get_type(token) == TKN_IO_HERE)
+	else if (get_type(token) == TKN_OPP_DLESS)
+	{
 		*tokens = (*tokens)->next;
+		if (*tokens == NULL)
+			return (false);
+		token = get_token(*tokens);
+		if (get_type(token) == TKN_IO_HERE)
+		{
+			set_value(get_token((*tokens)->prev), get_value(token));
+			*tokens = (*tokens)->prev;
+			delete_node((*tokens)->next);
+			*tokens = (*tokens)->next;
+		}
+		else
+			return (false);
+	}
 	else
 		return (false);
 	return (true);

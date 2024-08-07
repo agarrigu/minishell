@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:46 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:58:40 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:16:14 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 #include "command_name.h"
 #include "cleaners.h"
 
-
+// REFACTOOOOR
 char	*get_command(t_dlist *tokens)
 {
 	t_token		*token;
 	t_typtok	token_type;
 
-	token = get_token(tokens); // refactorize!!!!
+	token = get_token(tokens);
 	token_type = get_type(token);
 	while (token_type != TKN_CMD)
 	{
@@ -81,4 +81,3 @@ char	**get_env_paths(t_dlist *environ)
 	}
 	return (NULL);
 }
-
