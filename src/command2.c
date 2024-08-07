@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 12:28:20 by srodrigo          #+#    #+#             */
-/*   Updated: 2024/07/25 19:11:31 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:22:16 by srodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*find_command_path(t_dlist **environ, t_command *cmd)
 	path = NULL;
 	paths = get_env_paths(*environ);
 	aux = ft_strjoin("/", cmd->filepath);
-	i = 0;
+	i = -1;
 	while (paths && paths[++i])
 	{
 		path = ft_strjoin(paths[i], aux);
@@ -58,10 +58,13 @@ char	**get_env_paths(t_dlist *environ)
 	while (environ)
 	{
 		if (ft_strcmp(get_kvpr_key(get_kvpr(environ)), "PATH") == 0)
+		{
 			paths = ft_split(get_kvpr_value(get_kvpr(environ)), ':');
+			return (paths);
+		}
 		environ = environ->next;
 	}
-	return (paths);
+	return (NULL);
 }
 
 void	close_if_fd(int fd)
