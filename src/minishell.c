@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 22:59:11 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:43:59 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include "heredoc.h"
 #include "rules.h"
-#include "mstypes.h"
 #include "command_line.h"
 #include "command_name.h"
 #include "expander.h"
@@ -45,8 +44,9 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 {
 	int			commands;
 	t_command	command;
-	static int	ret;
+	int			ret;
 
+	ret = 0;
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_builtin(get_command(tokens)))
