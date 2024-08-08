@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 18:25:52 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 18:38:51 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:03:16 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static void	tf_expand_name(char *buff, const char *word, t_dlist *environ)
 			word += len;
 			buff += len;
 		}
+		else if (*word == '$' && word[1] == '?')
+			ft_expand_last_status(&buff, &word, environ);
 		else if (*word == '$' && ft_isname(word[1]))
 			ft_actually_expand_name(&buff, &word, environ);
 		else
@@ -92,7 +94,7 @@ void	ft_expand(t_dlist **tokens, t_dlist *environ)
 	t_dlist	*new;
 	t_dlist	*iter;
 	t_token	*token;
-	char	buff[2 * 1024 * 1024];
+	char	buff[4 * 1024];
 
 	iter = *tokens;
 	new = NULL;

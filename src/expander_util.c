@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:35:56 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/06 20:42:20 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:08:33 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ char	*ft_actually_expand_name2(char *buff, t_dlist *environ)
 	}
 	free((void *)key);
 	return (buff);
+}
+
+void	ft_expand_last_status(char **buff, const char **word, t_dlist *environ)
+{
+	const char	*val;
+	const char	*key;
+
+	key = "MS_LAST_STATUS";
+	val = ft_get_val(environ, key);
+	if (val)
+		while (*val)
+			*(*buff)++ = *val++;
+	*word += 2;
 }

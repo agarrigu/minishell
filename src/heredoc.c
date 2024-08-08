@@ -6,7 +6,7 @@
 /*   By: algarrig <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:55:31 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 18:34:30 by algarrig         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:49:11 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static const char	*tf_remove_allquotes(const char *s)
 
 static const char	*tf_expand_and_free(const char *s, t_dlist *environ)
 {
-	char		buff[2 * 1024 * 1024];
+	char		buff[4 * 1024];
 	char		*biter;
 	const char	*siter;
 
