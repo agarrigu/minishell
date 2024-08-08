@@ -6,7 +6,7 @@
 /*   By: srodrigo <srodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:47:21 by algarrig          #+#    #+#             */
-/*   Updated: 2024/08/07 20:29:06 by srodrigo         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:30:00 by algarrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include "heredoc.h"
 #include "rules.h"
-#include "mstypes.h"
 #include "command_line.h"
 #include "command_name.h"
 #include "expander.h"
@@ -45,8 +44,9 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 {
 	int			commands;
 	t_command	command;
-	static int	ret;
+	int			ret;
 
+	ret = 0;
 	init_command(&command, tokens);
 	commands = get_num_commands(tokens);
 	if (commands == 1 && is_builtin(get_command(tokens)))
@@ -67,7 +67,7 @@ int	execer(t_dlist *tokens, t_dlist **environ)
 	ft_add_msls_to_env(environ, ret);
 	return (free(command.childs_pid), ret);
 }
-#include "helpers.h"
+
 static void	tf_loop(t_dlist **environ)
 {
 	static char		*user_input;
@@ -88,7 +88,6 @@ static void	tf_loop(t_dlist **environ)
 		ft_expand(&tokens, *environ);
 		if (ft_parse(tokens))
 			execer(tokens, environ);
-		print_tokens(tokens);
 		ft_dlstclear(&tokens, &ft_token_cleaner);
 		free(user_input);
 	}
