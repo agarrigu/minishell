@@ -25,7 +25,7 @@ First clone the repository, then navigate to it and:
 
 `$ make`
 
-or if you want simbols for debugging
+or if you want symbols for debugging
 
 `$ make debug`
 
